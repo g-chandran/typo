@@ -1,30 +1,46 @@
 <script>
-	export let name;
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+  <h2>Hello Chandran!</h2>
+  <h3>Hello Chandran!</h3>
+  <h4>Hello Chandran!</h4>
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
+  :global(*),
+  :global(body) {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Courier New", Courier, monospace;
+  }
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
+  :global(:root) {
+    --orange: #ff3e00;
+    --black: #0c0c0c;
+    --white: #f0f0f0;
+    --background-color: #f2f2f2;
 
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
+    --big-font: 2.5rem;
+    --med-font: 2rem;
+    --small-font: 1rem;
+  }
+
+  h2,
+  h3,
+  h4 {
+    color: var(--orange);
+  }
+  h2 {
+    font-size: var(--small-font);
+  }
+
+  h3 {
+    font-size: var(--med-font);
+  }
+
+  h4 {
+    font-size: var(--big-font);
+  }
 </style>
