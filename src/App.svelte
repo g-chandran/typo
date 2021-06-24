@@ -1,10 +1,14 @@
 <script>
+  import Button from "./components/Button.svelte";
+  import TypeProgress from "./components/TypeProgress.svelte";
+  import { START, PROGRESS, END } from "./stores/utils/constants";
+
+  const stages = { start: Button, progress: TypeProgress };
+  let currentStage = START;
 </script>
 
 <main>
-  <h2>Hello Chandran!</h2>
-  <h3>Hello Chandran!</h3>
-  <h4>Hello Chandran!</h4>
+  <svelte:component this={stages[currentStage]} />
 </main>
 
 <style>
@@ -26,21 +30,11 @@
     --med-font: 2rem;
     --small-font: 1rem;
   }
-
-  h2,
-  h3,
-  h4 {
-    color: var(--orange);
-  }
-  h2 {
-    font-size: var(--small-font);
-  }
-
-  h3 {
-    font-size: var(--med-font);
-  }
-
-  h4 {
-    font-size: var(--big-font);
+  main {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
   }
 </style>
