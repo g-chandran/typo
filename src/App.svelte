@@ -1,14 +1,33 @@
 <script>
   import Button from "./components/Button.svelte";
   import TypeProgress from "./components/TypeProgress.svelte";
+  import Result from "./components/Result.svelte";
   import { START, PROGRESS, END } from "./stores/utils/constants";
 
-  const stages = { start: Button, progress: TypeProgress };
+  // const stages = { start: Button, progress: TypeProgress };
   let currentStage = START;
+
+  const updateStage = (event) => {
+    console.log(event.detail.position);
+    if (event.detail.position) {
+      if (currentStage === PROGRESS) currentStage = START;
+    } else {
+      if (currentStage === START) currentStage = PROGRESS;
+      else if (currentStage === PROGRESS) currentStage = END;
+      else if (currentStage == END) currentStage = START;
+    }
+  };
 </script>
 
 <main>
-  <svelte:component this={stages[currentStage]} />
+  <!-- <svelte:component this={stages[currentStage]} /> -->
+  {#if currentStage === PROGRESS}
+    <TypeProgress on:updateStage={updateStage} />
+  {:else if currentStage === END}
+    <Result on:updateStage={updateStage} />
+  {:else}
+    <Button on:updateStage={updateStage} title="Start Typing" />
+  {/if}
 </main>
 
 <style>
@@ -32,9 +51,12 @@
   }
   main {
     display: flex;
+    flex-direction: column;
     width: 100vw;
     height: 100vh;
     align-items: center;
     justify-content: center;
+    position: absolute;
+    top: 0;
   }
 </style>
