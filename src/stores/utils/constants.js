@@ -3,3 +3,9 @@ export const STAGES = Object.freeze({
 	END: "end",
 	PROGRESS: "progress",
 });
+
+export const STATUS = Object.freeze({
+	UNWRITTEN: 'unWritten',
+	CORRECT: 'correct',
+	INCORRECT: 'incorrect'
+})

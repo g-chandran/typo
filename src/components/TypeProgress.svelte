@@ -1,8 +1,10 @@
 <script>
   import Button from "./Button.svelte";
+  import Carousel from "./Carousel.svelte";
 </script>
 
 <div class="container">
+  <Carousel />
   <Button
     name="0"
     color="#ff3e00"
