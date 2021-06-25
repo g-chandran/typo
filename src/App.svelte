@@ -48,6 +48,7 @@
 
     --big-font: 2.5rem;
     --med-font: 2rem;
+    --med-font-2: 1.5rem;
     --small-font: 1rem;
   }
   main {

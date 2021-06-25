@@ -72,4 +72,10 @@
   .incorrect {
     color: var(--orange);
   }
+
+  @media only screen and (max-width: 480px) {
+    span {
+      font-size: var(--med-font);
+    }
+  }
 </style>

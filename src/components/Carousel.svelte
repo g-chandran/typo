@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import WordTile from "./WordTile.svelte";
+  import { flip } from "svelte/animate";
   import {
     THREE_LETTER_WORDS,
     FIVE_LETTER_WORDS,
@@ -49,14 +50,48 @@
   };
 </script>
 
-<div>
-  {#each wordList.slice(index, index + 3) as word, ind}
-    {#if ind === 1}
-      <WordTile on:moveNext={update} bind:word />
-    {:else}
-      <span>{word}</span>
-    {/if}
-  {:else}
-    <span>You drained my battery, refresh me charge again</span>
+<div class="container">
+  {#each wordList.slice(index, index + 3) as word, ind (word)}
+    <div animate:flip={{ duration: 200 }}>
+      {#if ind === 1}
+        <WordTile on:moveNext={update} bind:word />
+      {:else}
+        <span class={`word${ind}`}>{word}</span>
+      {/if}
+    </div>
   {/each}
 </div>
+
+<style>
+  .container {
+    display: flex;
+    border: 2px solid black;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 30rem;
+    background: linear-gradient(to right, white, transparent, white);
+  }
+
+  span {
+    font-size: var(--med-font-2);
+  }
+
+  .word0 {
+    padding-right: 2rem;
+  }
+
+  .word2 {
+    padding-left: 2rem;
+  }
+
+  @media only screen and (max-width: 480px) {
+    span {
+      font-size: var(--small-font);
+    }
+
+    .container {
+      width: 20rem;
+    }
+  }
+</style>
