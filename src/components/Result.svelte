@@ -2,10 +2,12 @@
   import Button from "./Button.svelte";
   export let score = 1;
   export let duration = 0;
+
+  let svgSource = Math.floor(Math.random() * 5);
 </script>
 
 <div class="container">
-  <img src="./assets/svgs/svg1.svg" alt="Sorry" />
+  <img src={`./assets/svgs/svg${svgSource}.svg`} alt="Sorry" />
   <p>
     You scored {score}
     {#if score === 1}word{:else}words{/if} in {duration} seconds
@@ -32,8 +34,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 40rem;
-    width: 70rem;
+    height: calc(100vh - 5rem);
+    width: calc(100vw - 10rem);
   }
 
   p {
@@ -41,5 +43,45 @@
     font-size: var(--med-font);
     font-weight: bold;
     text-transform: uppercase;
+  }
+
+  @media only screen and (max-width: 480px) {
+    .container {
+      border: none;
+      width: fit-content;
+      height: fit-content;
+    }
+
+    p {
+      font-size: var(--small-font);
+    }
+  }
+
+  @media only screen and (min-width: 481px) and (max-width: 768px) {
+    .container {
+      border: 5px solid var(--orange);
+      height: calc(100vh - 30px);
+      width: calc(100vw - 30px);
+    }
+
+    p {
+      font-size: var(--small-font);
+    }
+  }
+
+  @media only screen and (min-width: 769px) and (max-width: 1024px) {
+    .container {
+      border: 10px solid var(--orange);
+      height: calc(100vh - 50px);
+      width: calc(100vw - 50px);
+    }
+  }
+
+  @media only screen and (min-width: 1200px) {
+    .container {
+      border: 15px solid var(--orange);
+      height: 40rem;
+      width: 70rem;
+    }
   }
 </style>
