@@ -2,10 +2,11 @@
   import Button from "./components/Button.svelte";
   import TypeProgress from "./components/TypeProgress.svelte";
   import Result from "./components/Result.svelte";
-  import { START, PROGRESS, END } from "./stores/utils/constants";
+  import { STAGES } from "./stores/utils/constants";
 
+  let { START, PROGRESS, END } = STAGES;
   // const stages = { start: Button, progress: TypeProgress };
-  let currentStage = START;
+  let currentStage = PROGRESS;
 
   const updateStage = (event) => {
     console.log(event.detail.position);

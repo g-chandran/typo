@@ -1,3 +1,5 @@
-export const START = "start";
-export const END = "end";
-export const PROGRESS = "progress";
+export const STAGES = Object.freeze({
+	START: "start",
+	END: "end",
+	PROGRESS: "progress",
+});
