@@ -8,4 +8,6 @@ export const STATUS = Object.freeze({
 	UNWRITTEN: 'unWritten',
 	CORRECT: 'correct',
 	INCORRECT: 'incorrect'
-})
+});
+
+export const WORD_SET_THRESHOLD = 50;
