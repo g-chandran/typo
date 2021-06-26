@@ -54,9 +54,11 @@
   {#each wordList.slice(index, index + 3) as word, ind (word)}
     <div animate:flip={{ duration: 200 }}>
       {#if ind === 1}
-        <WordTile on:moveNext={update} bind:word />
+        <div class="word1">
+          <WordTile on:moveNext={update} bind:word />
+        </div>
       {:else}
-        <span class={`word${ind}`}>{word}</span>
+        <p class={`word${ind}`}>{word}</p>
       {/if}
     </div>
   {/each}
@@ -64,29 +66,31 @@
 
 <style>
   .container {
-    display: flex;
-    border: 2px solid black;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
     align-items: center;
-    justify-content: center;
     overflow: hidden;
     width: 30rem;
-    background: linear-gradient(to right, white, transparent, white);
   }
 
-  span {
+  p {
     font-size: var(--med-font-2);
   }
 
   .word0 {
-    padding-right: 2rem;
+    text-align: left;
+    color: linear-gradient(to right, green, red, green);
   }
 
+  .word1 {
+    text-align: center;
+  }
   .word2 {
-    padding-left: 2rem;
+    text-align: right;
   }
 
   @media only screen and (max-width: 480px) {
-    span {
+    p {
       font-size: var(--small-font);
     }
 
