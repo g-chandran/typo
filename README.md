@@ -1,105 +1,44 @@
-*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 
----
+# Typo
 
-# svelte app
+Typewriting. Words. Time. The project plays with them.
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
-
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
-
-```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
-```
-
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
+[Typo](https://typo.surge.sh) is the Project that I've started for fun and to dive deeper into Svelte Framework.
+This is the initial release of the application, more features will be added in the future.
 
 
-## Get started
 
-Install the dependencies...
+## Tech Stack
 
-```bash
-cd svelte-app
-npm install
-```
+**Client:** [SvelteJS](https://svelte.dev)
 
-...then start [Rollup](https://rollupjs.org):
+**Utils:** Rollup, ESLint
 
-```bash
-npm run dev
-```
+**Hosted at:** [Surge](https://surge.sh)
 
-Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+  
+## Acknowledgements
 
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
+ - [Words from WordFind](https://wordfind.com)
+ - [SVGS from UnDraw](https://undraw.co)
+ - [Awesome README from readme.so](https://readme.so)
+## Appendix
 
-If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
+The application currently has words classified into 3 types based the character length. Each type currently has 100 words summing up to 300 words totally.
+All the words used in this application are fetched from [WordFind](https://wordfind.com).
+## Badges
 
-## Building and running in production mode
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
+## Authors
 
-To create an optimised version of the app:
+- [@g-chandran](https://www.github.com/g-chandran)
 
-```bash
-npm run build
-```
+  
+## Roadmap
 
-You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
+- Add more Modes to play with
 
+- Add mobile Virtual Keyboard support
+## Support
 
-## Single-page app mode
-
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
-
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for *any* path. You can make it so by editing the `"start"` command in package.json:
-
-```js
-"start": "sirv public --single"
-```
-
-## Using TypeScript
-
-This template comes with a script to set up a TypeScript development environment, you can run it immediately after cloning the template with:
-
-```bash
-node scripts/setupTypeScript.js
-```
-
-Or remove the script via:
-
-```bash
-rm scripts/setupTypeScript.js
-```
-
-## Deploying to the web
-
-### With [Vercel](https://vercel.com)
-
-Install `vercel` if you haven't already:
-
-```bash
-npm install -g vercel
-```
-
-Then, from within your project folder:
-
-```bash
-cd public
-vercel deploy --name my-project
-```
-
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public my-project.surge.sh
-```
+For support, email chandranchan321@gmail.com.
