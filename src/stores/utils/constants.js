@@ -11,3 +11,4 @@ export const STATUS = Object.freeze({
 });
 
 export const WORD_SET_THRESHOLD = 50;
+export const TIMER_DURATION = 60;

@@ -1,6 +1,7 @@
 <script>
   import { slide } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
+  import { timer } from "../stores/timerStore.js";
   export let color = "#fff";
   export let title = "";
   export let name = "60 Seconds-Infinite Words";
@@ -8,6 +9,10 @@
   export let back = false;
 
   let dispatch = createEventDispatcher();
+
+  $: if ($timer <= 0 && !back) {
+    updateStage();
+  }
 
   const updateStage = () => {
     dispatch("updateStage", {

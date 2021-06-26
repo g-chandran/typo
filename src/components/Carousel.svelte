@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { createEventDispatcher } from "svelte";
   import WordTile from "./WordTile.svelte";
   import { flip } from "svelte/animate";
   import {
@@ -9,11 +10,12 @@
   } from "../stores/wordStore.js";
   import { WORD_SET_THRESHOLD } from "../stores/utils/constants.js";
 
+  const dispatch = createEventDispatcher();
+
   const CAPACITY =
     THREE_LETTER_WORDS.length +
     FIVE_LETTER_WORDS.length +
     SEVEN_LETTER_WORDS.length;
-  console.log(CAPACITY);
 
   let wordSet = new Set();
   let wordList = new Array();
@@ -34,6 +36,7 @@
       updatePipeline();
     }
     if (index < CAPACITY) index += 1;
+    dispatch("updateScore");
   };
 
   const updatePipeline = () => {

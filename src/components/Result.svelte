@@ -1,7 +1,8 @@
 <script>
+  import { score } from "../stores/scoreStore.js";
+  import { timer } from "../stores/timerStore.js";
   import Button from "./Button.svelte";
-  export let score = 1;
-  export let duration = 0;
+  import { TIMER_DURATION } from "../stores/utils/constants.js";
 
   let svgSource = Math.floor(Math.random() * 5);
 </script>
@@ -9,8 +10,8 @@
 <div class="container">
   <img src={`./assets/svgs/svg${svgSource}.svg`} alt="Sorry" />
   <p>
-    You scored {score}
-    {#if score === 1}word{:else}words{/if} in {duration} seconds
+    You typed {$score}
+    {#if $score === 1}word{:else}words{/if} in {TIMER_DURATION - $timer} seconds
   </p>
   <Button
     color="#ff3e00"
