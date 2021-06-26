@@ -1,5 +1,4 @@
 <script>
-  import { slide } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
   import { timer } from "../stores/timerStore.js";
   export let color = "#fff";
@@ -24,7 +23,6 @@
 <button
   on:click={updateStage}
   {title}
-  transition:slide={{ duration: 100 }}
   style="color: {color}; background-color: {backgroundColor}"
 >
   {name}

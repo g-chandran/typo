@@ -3,6 +3,7 @@
   import TypeProgress from "./components/TypeProgress.svelte";
   import Result from "./components/Result.svelte";
   import { STAGES } from "./stores/utils/constants";
+  import { slide } from "svelte/transition";
 
   let { START, PROGRESS, END } = STAGES;
   // const stages = { start: Button, progress: TypeProgress };
@@ -23,11 +24,17 @@
 <main>
   <!-- <svelte:component this={stages[currentStage]} /> -->
   {#if currentStage === PROGRESS}
-    <TypeProgress on:updateStage={updateStage} />
+    <div transition:slide={{ duration: 200 }}>
+      <TypeProgress on:updateStage={updateStage} />
+    </div>
   {:else if currentStage === END}
-    <Result on:updateStage={updateStage} />
+    <div transition:slide={{ duration: 200 }}>
+      <Result on:updateStage={updateStage} />
+    </div>
   {:else}
-    <Button on:updateStage={updateStage} title="Start Typing" />
+    <div transition:slide={{ duration: 200 }}>
+      <Button on:updateStage={updateStage} title="Start Typing" />
+    </div>
   {/if}
 </main>
 
