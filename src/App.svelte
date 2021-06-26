@@ -6,11 +6,9 @@
   import { slide } from "svelte/transition";
 
   let { START, PROGRESS, END } = STAGES;
-  // const stages = { start: Button, progress: TypeProgress };
-  let currentStage = PROGRESS;
+  let currentStage = START;
 
   const updateStage = (event) => {
-    console.log(event.detail.position);
     if (event.detail.position) {
       if (currentStage === PROGRESS) currentStage = START;
     } else {
@@ -22,7 +20,6 @@
 </script>
 
 <main>
-  <!-- <svelte:component this={stages[currentStage]} /> -->
   {#if currentStage === PROGRESS}
     <div transition:slide={{ duration: 200 }}>
       <TypeProgress on:updateStage={updateStage} />

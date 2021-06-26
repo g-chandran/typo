@@ -3,12 +3,29 @@
   import { timer } from "../stores/timerStore.js";
   import Button from "./Button.svelte";
   import { TIMER_DURATION } from "../stores/utils/constants.js";
+  import { quintInOut } from "svelte/easing";
 
   let svgSource = Math.floor(Math.random() * 5);
+
+  const loadSVG = (node, { duration = 200 }) => {
+    return {
+      duration,
+      css: (t) => {
+        const ease = quintInOut(t);
+        return `
+          transform: scale(${ease}) rotate(${ease * 1080}deg);
+        `;
+      },
+    };
+  };
 </script>
 
 <div class="container">
-  <img src={`./assets/svgs/svg${svgSource}.svg`} alt="Sorry" />
+  <img
+    transition:loadSVG={{ duration: 1200 }}
+    src={`./assets/svgs/svg${svgSource}.svg`}
+    alt="Sorry"
+  />
   <p>
     You typed {$score}
     {#if $score === 1}word{:else}words{/if} in {TIMER_DURATION - $timer} seconds
