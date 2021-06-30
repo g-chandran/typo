@@ -4,6 +4,8 @@
   import Result from "./components/Result.svelte";
   import { STAGES } from "./stores/utils/constants";
   import { slide } from "svelte/transition";
+  import { loadImages } from "./stores/imageStore.js";
+  import { onMount } from "svelte";
 
   let { START, PROGRESS, END } = STAGES;
   let currentStage = START;
@@ -14,9 +16,11 @@
     } else {
       if (currentStage === START) currentStage = PROGRESS;
       else if (currentStage === PROGRESS) currentStage = END;
-      else if (currentStage == END) currentStage = START;
+      else if (currentStage === END) currentStage = START;
     }
   };
+
+  onMount(loadImages);
 </script>
 
 <main>

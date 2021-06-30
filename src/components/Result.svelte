@@ -6,6 +6,7 @@
   import { quintInOut } from "svelte/easing";
 
   let svgSource = Math.floor(Math.random() * 5);
+  let image = false;
 
   const loadSVG = (node, { duration = 200 }) => {
     return {
@@ -22,6 +23,12 @@
 
 <div class="container">
   <img
+    on:load={() => {
+      console.log("Loaded");
+      image = true;
+      console.log(image);
+    }}
+    class:image
     transition:loadSVG={{ duration: 1200 }}
     src={`./assets/svgs/svg${svgSource}.svg`}
     alt="Sorry"
@@ -40,10 +47,15 @@
 </div>
 
 <style>
+  .image {
+    opacity: 1;
+  }
+
   img {
     width: 15rem;
     height: 15rem;
     margin-bottom: 2rem;
+    opacity: 0;
   }
 
   .container {
