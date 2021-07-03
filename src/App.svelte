@@ -34,7 +34,11 @@
     </div>
   {:else}
     <div transition:slide={{ duration: 200 }}>
-      <Button on:updateStage={updateStage} title="Start Typing" />
+      <Button
+        on:updateStage={updateStage}
+        onClickEventName="updateStage"
+        title="Start Typing"
+      />
     </div>
   {/if}
 </main>
