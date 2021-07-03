@@ -5,10 +5,13 @@
   import { score } from "../stores/scoreStore";
   import { timer } from "../stores/timerStore";
   import { TIMER_DURATION } from "../stores/utils/constants.js";
+  import { createEventDispatcher } from "svelte";
 
   const updateScore = () => {
     score.update((e) => (e += 1));
   };
+
+  const dispatch = createEventDispatcher();
 
   let interval;
 
@@ -22,9 +25,11 @@
 
   onMount(() => {
     timer.set(TIMER_DURATION);
-    countdown();
     score.set(0);
+    countdown();
   });
+
+  $: if ($timer <= 0) dispatch("updateStage", {});
 
   onDestroy(() => clearInterval(interval));
 </script>
@@ -34,13 +39,19 @@
   <div>
     <Button
       bind:name={$score}
-      color="#ff3e00"
-      backgroundColor="#fff"
-      back={true}
+      button="white"
+      onClickEventName="updateStage"
+      onClickEventProps={{ position: true }}
       on:updateStage
       title="Score | Go Back"
     />
-    <Button on:updateStage bind:name={$timer} title="Timer | Cancel" />
+    <Button
+      bind:name={$timer}
+      button="orange"
+      onClickEventName="updateStage"
+      on:updateStage
+      title="Timer | Cancel"
+    />
   </div>
 </div>
 

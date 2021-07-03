@@ -24,9 +24,7 @@
 <div class="container">
   <img
     on:load={() => {
-      console.log("Loaded");
       image = true;
-      console.log(image);
     }}
     class:image
     transition:loadSVG={{ duration: 1200 }}
@@ -38,10 +36,10 @@
     {#if $score === 1}word{:else}words{/if} in {TIMER_DURATION - $timer} seconds
   </p>
   <Button
-    color="#ff3e00"
     title="Start again"
     name="Typo"
-    backgroundColor="#fff"
+    button="theme"
+    onClickEventName="updateStage"
     on:updateStage
   />
 </div>
