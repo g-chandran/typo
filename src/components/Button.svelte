@@ -1,27 +1,30 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { BUTTON_COLORS, THEMES, COLORS } from "../stores/utils/constants.js";
+  const { ORANGE, THEME } = BUTTON_COLORS;
+  const { LIGHT, DARK } = THEMES;
+  const { ORANGE_COLOR, WHITE, BLACK } = COLORS;
+
   export let title = "";
   export let name = "60 Seconds-Infinite Words";
-  export let theme = "light";
-  export let button = "orange";
+  export let theme = LIGHT;
+  export let button = ORANGE;
   export let onClickEventName = "customClick";
   export let onClickEventProps = {};
 
   const buttonTypes = {
-    orangeButton: {
-      backgroundColor: "#ff3e00",
-      color: theme === "light" ? "#fff" : "#000",
+    [ORANGE]: {
+      backgroundColor: ORANGE_COLOR,
+      color: theme === LIGHT ? WHITE : BLACK,
     },
-    themeButton: {
-      backgroundColor: theme === "light" ? "#fff" : "#000",
-      color: "#ff3e00",
+    [THEME]: {
+      backgroundColor: theme === LIGHT ? WHITE : BLACK,
+      color: ORANGE_COLOR,
     },
   };
 
   const currentButton =
-    button === "orange"
-      ? buttonTypes["orangeButton"]
-      : buttonTypes["themeButton"];
+    button === ORANGE ? buttonTypes[ORANGE] : buttonTypes[THEME];
 
   let dispatch = createEventDispatcher();
 
