@@ -1,7 +1,7 @@
 <script>
   import Button from "./components/Button.svelte";
-  import TypeProgress from "./components/TypeProgress.svelte";
-  import Result from "./components/Result.svelte";
+  import TypeProgress from "./pages/TypeProgress.svelte";
+  import Result from "./pages/Result.svelte";
   import CommandPalette from "./components/CommandPalette.svelte";
   import { STAGES } from "./stores/utils/constants";
   import { slide } from "svelte/transition";
