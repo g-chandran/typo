@@ -2,6 +2,7 @@
   import Button from "./components/Button.svelte";
   import TypeProgress from "./components/TypeProgress.svelte";
   import Result from "./components/Result.svelte";
+  import CommandPalette from "./components/CommandPalette.svelte";
   import { STAGES } from "./stores/utils/constants";
   import { slide } from "svelte/transition";
   import { loadImages } from "./stores/imageStore.js";
@@ -24,6 +25,7 @@
 </script>
 
 <main>
+  <CommandPalette />
   {#if currentStage === PROGRESS}
     <div transition:slide={{ duration: 200 }}>
       <TypeProgress on:updateStage={updateStage} />

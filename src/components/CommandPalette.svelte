@@ -1,32 +1,42 @@
 <script>
+  import {
+    THEME_COMMANDS,
+    SETTINGS_COMMANDS,
+    PLAYMODE_COMMANDS,
+    COMMAND_FILTERS,
+  } from "../stores/utils/commands.js";
+
+  const { SETTINGS_FILTER, PLAYMODE_FILTER, THEME_FILTER } = COMMAND_FILTERS;
   const focusInput = (node) => node.focus();
+
   let currentIndex = 0;
-  const suggestions = [
-    { name: "Theme: Dark", onSelect: () => console.log("Theme Dark") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    { name: "Theme: Light", onSelect: () => console.log("Theme Light") },
-    {
-      name: "Playmode: Classic",
-      onSelect: () => console.log("Playmode classic"),
-    },
-  ];
+  let suggestions = [];
+  let filters = [THEME_COMMANDS, PLAYMODE_COMMANDS, SETTINGS_COMMANDS];
+  let command = "";
+
+  $: if (command[0] === THEME_FILTER) filters = [THEME_COMMANDS];
+  else if (command[0] === PLAYMODE_FILTER) filters = [PLAYMODE_COMMANDS];
+  else if (command[0] === SETTINGS_FILTER) filters = [SETTINGS_COMMANDS];
+  else filters = [THEME_COMMANDS, PLAYMODE_COMMANDS, SETTINGS_COMMANDS];
+
+  $: console.log(filters);
+
+  $: {
+    if (command.length > 0) {
+      suggestions = [];
+      filters.forEach((element) => suggestions.push(...element));
+    }
+  }
+
+  const inputFilter = (value) => {
+    const regex = new RegExp(`command/i`);
+    return regex.test(value.name);
+  };
 
   const handleKeyPress = (event) => {
     const key = event.key;
     if (key === "Enter") {
-      console.log("Clicked Enter");
+      suggestions[currentIndex].onSelect();
     } else if (key === "ArrowDown") {
       currentIndex = Math.abs((currentIndex + 1) % suggestions.length);
     } else if (key === "ArrowUp") {
@@ -34,7 +44,11 @@
         currentIndex = suggestions.length - 1;
       } else currentIndex -= 1;
     }
-    console.log(currentIndex);
+  };
+
+  const handleClick = (index) => {
+    currentIndex = index;
+    suggestions[currentIndex].onSelect();
   };
 </script>
 
@@ -43,16 +57,26 @@
 <div class="command-palette">
   <section class="search-bar">
     <i class="material-icons">search</i>
-    <input use:focusInput type="text" placeholder="theme playmode settings" />
+    <input
+      bind:value={command}
+      use:focusInput
+      type="text"
+      placeholder="Type something"
+    />
   </section>
   <hr />
-  <section class="results">
+  <div class="results">
     {#each suggestions as suggestion, index}
-      <p class:selected={currentIndex === index} on:click={suggestion.onSelect}>
+      <p
+        class:selected={currentIndex === index}
+        on:click={() => handleClick(index)}
+      >
         {suggestion.name}
       </p>
+    {:else}
+      <em>>: theme, #: playmode, @: settings</em>
     {/each}
-  </section>
+  </div>
 </div>
 
 <style>
@@ -64,7 +88,7 @@
 
   i {
     font-size: var(--med-font);
-    margin-right: 10px;
+    margin: 0 10px;
     opacity: 0.5;
   }
 
@@ -86,8 +110,6 @@
 
   .results {
     padding: 5px 10px;
-    overflow-y: scroll;
-    max-height: calc(5 * 24px);
   }
 
   .results p {
@@ -101,8 +123,4 @@
   .selected {
     background-color: green;
   }
-
-  /* ::-webkit-scrollbar {
-    width: 5px;
-  } */
 </style>
