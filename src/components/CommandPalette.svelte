@@ -1,4 +1,6 @@
 <script>
+  import { element } from "svelte/internal";
+
   import {
     THEME_COMMANDS,
     SETTINGS_COMMANDS,
@@ -14,29 +16,33 @@
   let filters = [THEME_COMMANDS, PLAYMODE_COMMANDS, SETTINGS_COMMANDS];
   let command = "";
 
-  $: if (command[0] === THEME_FILTER) filters = [THEME_COMMANDS];
-  else if (command[0] === PLAYMODE_FILTER) filters = [PLAYMODE_COMMANDS];
-  else if (command[0] === SETTINGS_FILTER) filters = [SETTINGS_COMMANDS];
-  else filters = [THEME_COMMANDS, PLAYMODE_COMMANDS, SETTINGS_COMMANDS];
-
-  $: console.log(filters);
-
   $: {
-    if (command.length > 0) {
-      suggestions = [];
-      filters.forEach((element) => suggestions.push(...element));
-    }
+    if (command[0] === THEME_FILTER) filters = [THEME_COMMANDS];
+    else if (command[0] === PLAYMODE_FILTER) filters = [PLAYMODE_COMMANDS];
+    else if (command[0] === SETTINGS_FILTER) filters = [SETTINGS_COMMANDS];
+    else filters = [THEME_COMMANDS, PLAYMODE_COMMANDS, SETTINGS_COMMANDS];
+    updateSuggestions();
   }
 
+  const updateSuggestions = () => {
+    suggestions = [];
+    if (command.length > 0)
+      for (const filter_ of filters) {
+        suggestions.push(...filter_.filter(inputFilter));
+      }
+  };
+
   const inputFilter = (value) => {
-    const regex = new RegExp(`command/i`);
+    let regex;
+    if (filters.length > 1) regex = new RegExp(command, "i");
+    else regex = new RegExp(command.slice(1, command.length), "i");
     return regex.test(value.name);
   };
 
   const handleKeyPress = (event) => {
     const key = event.key;
     if (key === "Enter") {
-      suggestions[currentIndex].onSelect();
+      suggestions[currentIndex].callee();
     } else if (key === "ArrowDown") {
       currentIndex = Math.abs((currentIndex + 1) % suggestions.length);
     } else if (key === "ArrowUp") {
@@ -48,7 +54,7 @@
 
   const handleClick = (index) => {
     currentIndex = index;
-    suggestions[currentIndex].onSelect();
+    suggestions[currentIndex].callee();
   };
 </script>
 
