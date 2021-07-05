@@ -41,7 +41,7 @@
   const handleKeyPress = (event) => {
     const key = event.key;
     if (key === "Enter") {
-      suggestions[currentIndex].callee();
+      if (suggestions[currentIndex]) suggestions[currentIndex].callee();
     } else if (key === "ArrowDown") {
       currentIndex = Math.abs((currentIndex + 1) % suggestions.length);
     } else if (key === "ArrowUp") {
