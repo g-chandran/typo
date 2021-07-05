@@ -1,6 +1,4 @@
 <script>
-  import { element } from "svelte/internal";
-
   import {
     THEME_COMMANDS,
     SETTINGS_COMMANDS,
@@ -26,6 +24,7 @@
 
   const updateSuggestions = () => {
     suggestions = [];
+    currentIndex = 0;
     if (command.length > 0)
       for (const filter_ of filters) {
         suggestions.push(...filter_.filter(inputFilter));
@@ -67,7 +66,7 @@
       bind:value={command}
       use:focusInput
       type="text"
-      placeholder="Type something"
+      placeholder="just typo it"
     />
   </section>
   <hr />
@@ -80,7 +79,11 @@
         {suggestion.name}
       </p>
     {:else}
-      <em>>: theme, #: playmode, @: settings</em>
+      {#if command.length > 0}
+        <em>No matching commands</em>
+      {:else}
+        <em>>: theme, #: playmode, @: settings</em>
+      {/if}
     {/each}
   </div>
 </div>
@@ -88,7 +91,8 @@
 <style>
   .command-palette {
     width: 45rem;
-    border: 1px solid red;
+    border: 1px solid var(--orange);
+    box-shadow: 0 0 15px -5px var(--orange);
     background-color: white;
   }
 
@@ -121,12 +125,29 @@
   .results p {
     padding: 2px 5px;
     height: 23px;
+    font-size: var(--small-font);
   }
 
   .results p:hover {
-    background-color: yellow;
+    background-color: var(--med-orange);
   }
   .selected {
-    background-color: green;
+    background-color: var(--orange);
+  }
+
+  @media only screen and (max-width: 768px) {
+    .command-palette {
+      width: 25rem;
+    }
+
+    input[type="text"] {
+      font-size: var(--small-font);
+    }
+  }
+
+  @media only screen and (min-width: 769px) and (max-width: 1024px) {
+    .command-palette {
+      width: 35rem;
+    }
   }
 </style>

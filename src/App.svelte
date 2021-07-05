@@ -56,6 +56,7 @@
 
   :global(:root) {
     --orange: #ff3e00;
+    --med-orange: #ff40009f;
     --black: #0c0c0c;
     --white: #f0f0f0;
     --background-color: #f2f2f2;
