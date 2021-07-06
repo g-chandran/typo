@@ -19,7 +19,7 @@
 
 <div>
   {#if isCommandPaletteActive}
-    <div transition:fly={{ duration: 100 }}>
+    <div transition:fly={{ duration: 100, y: -200 }}>
       <CommandPalette />
     </div>
   {/if}
