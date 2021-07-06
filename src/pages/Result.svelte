@@ -1,7 +1,7 @@
 <script>
   import { score } from "../stores/scoreStore.js";
   import { timer } from "../stores/timerStore.js";
-  import Button from "./Button.svelte";
+  import Button from "../components/Button.svelte";
   import { TIMER_DURATION } from "../stores/utils/constants.js";
   import { quintInOut } from "svelte/easing";
 

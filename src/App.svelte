@@ -1,11 +1,11 @@
 <script>
-  import Button from "./components/Button.svelte";
-  import TypeProgress from "./components/TypeProgress.svelte";
-  import Result from "./components/Result.svelte";
+  import TypeProgress from "./pages/TypeProgress.svelte";
+  import Result from "./pages/Result.svelte";
   import { STAGES } from "./stores/utils/constants";
   import { slide } from "svelte/transition";
   import { loadImages } from "./stores/imageStore.js";
   import { onMount } from "svelte";
+  import Homepage from "./pages/Homepage.svelte";
 
   let { START, PROGRESS, END } = STAGES;
   let currentStage = START;
@@ -34,11 +34,7 @@
     </div>
   {:else}
     <div transition:slide={{ duration: 200 }}>
-      <Button
-        on:updateStage={updateStage}
-        onClickEventName="updateStage"
-        title="Start Typing"
-      />
+      <Homepage on:updateStage={updateStage} />
     </div>
   {/if}
 </main>
@@ -54,6 +50,7 @@
 
   :global(:root) {
     --orange: #ff3e00;
+    --med-orange: #ff40009f;
     --black: #0c0c0c;
     --white: #f0f0f0;
     --background-color: #f2f2f2;

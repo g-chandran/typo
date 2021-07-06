@@ -1,7 +1,7 @@
 <script>
-  import Button from "./Button.svelte";
+  import Button from "../components/Button.svelte";
   import { onMount, onDestroy } from "svelte";
-  import Carousel from "./Carousel.svelte";
+  import Carousel from "../components/Carousel.svelte";
   import { score } from "../stores/scoreStore";
   import { timer } from "../stores/timerStore";
   import { TIMER_DURATION } from "../stores/utils/constants.js";
