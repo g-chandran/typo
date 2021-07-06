@@ -14,6 +14,9 @@
   let filters = [THEME_COMMANDS, PLAYMODE_COMMANDS, SETTINGS_COMMANDS];
   let command = "";
 
+  /* 
+    Reactive block for updating field filters
+  */
   $: {
     if (command[0] === THEME_FILTER) filters = [THEME_COMMANDS];
     else if (command[0] === PLAYMODE_FILTER) filters = [PLAYMODE_COMMANDS];
@@ -27,18 +30,40 @@
     currentIndex = 0;
     if (command.length > 0)
       for (const filter_ of filters) {
-        suggestions.push(...filter_.filter(inputFilter));
+        suggestions.push(...filter_.filter(inputValidator));
       }
   };
 
+  /* 
+    Checks whether command is a substring of any filter
+    Uses regex for validation
+  */
   const inputFilter = (value) => {
-    if (command.length <= 1 && ["?", "*", "+"].includes(command)) return false;
+    if (
+      command.length === 1 &&
+      ![">", "@", "#"].includes(command) &&
+      !/[a-z0-9]/i.test(command)
+    )
+      return false;
     let regex;
     if (filters.length > 1) regex = new RegExp(command, "i");
     else regex = new RegExp(command.slice(1, command.length), "i");
     return regex.test(value.name);
   };
 
+  /* 
+    Checks whether command is a substring of any filter
+    Uses includes() method to perform the comparison
+  */
+  const inputValidator = (value) => {
+    let comparison =
+      filters.length > 1 ? command : command.slice(1, command.length);
+    return value.name.toLowerCase().includes(comparison.toLowerCase());
+  };
+
+  /* 
+    Handler for all the key events occuring in the Component
+  */
   const handleKeyPress = (event) => {
     const key = event.key;
     if (key === "Enter") {
@@ -52,6 +77,9 @@
     }
   };
 
+  /* 
+    on:Click event for suggestions
+  */
   const handleClick = (index) => {
     currentIndex = index;
     suggestions[currentIndex].callee();
