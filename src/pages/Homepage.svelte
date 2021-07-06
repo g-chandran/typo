@@ -5,13 +5,13 @@
 
   let isCommandPaletteActive = false;
 
+  const hideCommandPalette = () => (isCommandPaletteActive = false);
+
   const handleKeys = (event) => {
     if (event.ctrlKey && event.code === "Space") {
       isCommandPaletteActive = !isCommandPaletteActive;
     }
-    if (event.code === "Enter" || event.code === "Escape") {
-      isCommandPaletteActive = false;
-    }
+    if (event.code === "Enter" || event.code === "Escape") hideCommandPalette();
   };
 </script>
 
@@ -20,7 +20,7 @@
 <div>
   {#if isCommandPaletteActive}
     <div transition:fly={{ duration: 100, y: -200 }}>
-      <CommandPalette />
+      <CommandPalette on:suggestionHandled={hideCommandPalette} />
     </div>
   {/if}
   <Button on:updateStage onClickEventName="updateStage" title="Start Typing" />

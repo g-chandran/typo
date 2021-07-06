@@ -6,8 +6,12 @@
     COMMAND_FILTERS,
   } from "../stores/utils/commands.js";
 
+  import { createEventDispatcher } from "svelte";
+
   const { SETTINGS_FILTER, PLAYMODE_FILTER, THEME_FILTER } = COMMAND_FILTERS;
   const focusInput = (node) => node.focus();
+
+  const dispatch = createEventDispatcher();
 
   let currentIndex = 0;
   let suggestions = [];
@@ -68,6 +72,7 @@
     const key = event.key;
     if (key === "Enter") {
       if (suggestions[currentIndex]) suggestions[currentIndex].callee();
+      dispatch("suggestionHandled");
     } else if (key === "ArrowDown") {
       currentIndex = Math.abs((currentIndex + 1) % suggestions.length);
     } else if (key === "ArrowUp") {
@@ -78,11 +83,12 @@
   };
 
   /* 
-    on:Click event for suggestions
+  on:Click event for suggestions
   */
   const handleClick = (index) => {
     currentIndex = index;
     suggestions[currentIndex].callee();
+    dispatch("suggestionHandled");
   };
 </script>
 
