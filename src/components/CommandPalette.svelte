@@ -32,6 +32,7 @@
   };
 
   const inputFilter = (value) => {
+    if (command.length <= 1 && ["?", "*", "+"].includes(command)) return false;
     let regex;
     if (filters.length > 1) regex = new RegExp(command, "i");
     else regex = new RegExp(command.slice(1, command.length), "i");
