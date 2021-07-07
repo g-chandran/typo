@@ -4,7 +4,7 @@
   import Carousel from "../components/Carousel.svelte";
   import { score } from "../stores/scoreStore";
   import { timer } from "../stores/timerStore";
-  import { TIMER_DURATION } from "../stores/utils/constants.js";
+  import { getTimerDuration } from "../stores/utils/properties.js";
   import { createEventDispatcher } from "svelte";
 
   const updateScore = () => {
@@ -12,6 +12,7 @@
   };
 
   const dispatch = createEventDispatcher();
+  const TIMER_DURATION = getTimerDuration();
 
   let interval;
 

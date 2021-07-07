@@ -2,11 +2,12 @@
   import { score } from "../stores/scoreStore.js";
   import { timer } from "../stores/timerStore.js";
   import Button from "../components/Button.svelte";
-  import { TIMER_DURATION } from "../stores/utils/constants.js";
+  import { getTimerDuration } from "../stores/utils/properties.js";
   import { quintInOut } from "svelte/easing";
 
   let svgSource = Math.floor(Math.random() * 5);
   let image = false;
+  const TIMER_DURATION = getTimerDuration();
 
   const loadSVG = (node, { duration = 200 }) => {
     return {

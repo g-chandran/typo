@@ -1,4 +1,4 @@
 import {writable} from 'svelte/store';
-import { TIMER_DURATION } from '../stores/utils/constants.js'
+import {getTimerDuration} from '../stores/utils/properties.js';
 
-export const timer = writable(TIMER_DURATION);
+export const timer = writable(getTimerDuration());
