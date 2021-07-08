@@ -6,11 +6,6 @@
   const { UNWRITTEN, CORRECT, INCORRECT } = STATUS;
   const dispatch = createEventDispatcher();
 
-  // let index = 0;
-  // let wordObject = new Array(word.length);
-  // for (let i = 0; i < word.length; i++)
-  //   wordObject[i] = { status: UNWRITTEN, letter: word[i] };
-
   let index;
   let wordObject;
 
@@ -67,7 +62,7 @@
     color: gray;
   }
   .correct {
-    color: var(--black);
+    color: black;
   }
   .incorrect {
     color: var(--orange);

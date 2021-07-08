@@ -51,9 +51,12 @@
   :global(:root) {
     --orange: #ff3e00;
     --med-orange: #ff40009f;
-    --black: #0c0c0c;
-    --white: #f0f0f0;
-    --background-color: #f2f2f2;
+    --dark-1: #28293d;
+    --dark-2: #555770;
+    --dark-3: #8f90a6;
+    --light-1: #fafafc;
+    --light-2: #f2f2f5;
+    --light-3: #ebebf0;
 
     --big-font: 2.5rem;
     --med-font: 2rem;
