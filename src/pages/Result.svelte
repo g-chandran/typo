@@ -4,6 +4,8 @@
   import Button from "../components/Button.svelte";
   import { getTimerDuration } from "../stores/utils/properties.js";
   import { quintInOut } from "svelte/easing";
+  import { COLORS, THEMES } from "../stores/utils/constants";
+  import { theme } from "../stores/themeStore.js";
 
   let svgSource = Math.floor(Math.random() * 5);
   let image = false;
@@ -39,7 +41,7 @@
   <Button
     title="Start again"
     name="Typo"
-    button="theme"
+    backgroundColor={$theme === THEMES.DARK ? COLORS.BLACK : COLORS.WHITE}
     onClickEventName="updateStage"
     on:updateStage
   />
