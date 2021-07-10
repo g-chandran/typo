@@ -2,6 +2,8 @@
   import Button from "../components/Button.svelte";
   import CommandPalette from "../components/CommandPalette.svelte";
   import { fly } from "svelte/transition";
+  import { theme } from "../stores/themeStore";
+  import { COLORS, THEMES } from "../stores/utils/constants";
 
   let isCommandPaletteActive = false;
 
@@ -24,7 +26,9 @@
     </div>
   {/if}
   <Button on:updateStage onClickEventName="updateStage" title="Start Typing" />
-  <section>
+  <section
+    style="color: {$theme === THEMES.DARK ? COLORS.WHITE : COLORS.BLACK};"
+  >
     <span>Ctrl</span>
     +
     <span>Space</span>
