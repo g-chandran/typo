@@ -9,6 +9,7 @@
   export let onClickEventName = "customClick";
   export let onClickEventProps = {};
   export let backgroundColor = ORANGE_COLOR;
+  export let bold = false;
 
   $: foregroundColor =
     backgroundColor === ORANGE_COLOR
@@ -27,7 +28,9 @@
 <button
   on:click={clickEvent}
   {title}
-  style="color: {foregroundColor}; background-color: {backgroundColor}"
+  style="color: {foregroundColor}; background-color: {backgroundColor}; font-weight: {bold
+    ? 'bold'
+    : ''};"
 >
   {name}
 </button>
@@ -38,7 +41,6 @@
     border: none;
     padding: 0.75rem 1.5rem;
     min-width: 12rem;
-    box-shadow: 0px 0px 2px gray;
     border-radius: 0;
   }
 

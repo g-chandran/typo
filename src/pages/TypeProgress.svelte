@@ -6,7 +6,7 @@
   import { timer } from "../stores/timerStore";
   import { getTimerDuration } from "../stores/utils/properties.js";
   import { createEventDispatcher } from "svelte";
-  import { COLORS, THEMES } from "../stores/utils/constants";
+  import { COLORS, THEMES, THEME_COLORS } from "../stores/utils/constants";
   import { theme } from "../stores/themeStore";
 
   const updateScore = () => {
@@ -42,15 +42,19 @@
   <div>
     <Button
       bind:name={$score}
-      backgroundColor={$theme === THEMES.DARK ? COLORS.BLACK : COLORS.WHITE}
+      backgroundColor={$theme === THEMES.DARK
+        ? THEME_COLORS.DARK_3
+        : THEME_COLORS.LIGHT_3}
       onClickEventName="updateStage"
       onClickEventProps={{ position: true }}
+      bold={true}
       on:updateStage
       title="Score | Go Back"
     />
     <Button
       bind:name={$timer}
       onClickEventName="updateStage"
+      bold={true}
       on:updateStage
       title="Timer | Cancel"
     />
