@@ -129,13 +129,11 @@
         {suggestion.name}
       </p>
     {:else}
-      {#if command.length > 0}
-        <em style="color: {foregroundColor};">No matching commands</em>
-      {:else}
-        <em style="color: {foregroundColor};"
-          >>: theme, #: playmode, @: settings</em
-        >
-      {/if}
+      <em style="color: {foregroundColor};"
+        >{command.length > 0
+          ? "No matching commands"
+          : ">: theme, #: playmode, @: settings"}</em
+      >
     {/each}
   </div>
 </div>
