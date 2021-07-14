@@ -4,7 +4,7 @@
   import Button from "../components/Button.svelte";
   import { getTimerDuration } from "../stores/utils/properties.js";
   import { quintInOut } from "svelte/easing";
-  import { COLORS, THEMES } from "../stores/utils/constants";
+  import { COLORS, THEMES, THEME_COLORS } from "../stores/utils/constants";
   import { theme } from "../stores/themeStore.js";
 
   let svgSource = Math.floor(Math.random() * 5);
@@ -34,14 +34,16 @@
     src={`./assets/svgs/svg${svgSource}.svg`}
     alt="Sorry"
   />
-  <p>
+  <p style="color: {$theme == THEMES.DARK ? COLORS.WHITE : COLORS.BLACK};">
     You typed {$score}
     {#if $score === 1}word{:else}words{/if} in {TIMER_DURATION - $timer} seconds
   </p>
   <Button
     title="Start again"
     name="Typo"
-    backgroundColor={$theme === THEMES.DARK ? COLORS.BLACK : COLORS.WHITE}
+    backgroundColor={$theme === THEMES.DARK
+      ? THEME_COLORS.DARK_3
+      : THEME_COLORS.LIGHT_3}
     onClickEventName="updateStage"
     on:updateStage
   />
