@@ -1,7 +1,8 @@
 <script>
   export let word = "typo";
-  import { STATUS } from "../stores/utils/constants.js";
+  import { COLORS, STATUS, THEMES } from "../stores/utils/constants.js";
   import { createEventDispatcher } from "svelte";
+  import { theme } from "../stores/themeStore.js";
 
   const { UNWRITTEN, CORRECT, INCORRECT } = STATUS;
   const dispatch = createEventDispatcher();
@@ -43,13 +44,49 @@
     index = 0;
     dispatch("moveNext");
   }
+
+  const textColorFinder = (node, status) => {
+    if (status === STATUS.CORRECT) node.style.color = "black";
+    if (status === STATUS.INCORRECT) node.style.color = "yellow";
+    if (status === STATUS.UNWRITTEN) node.style.color = "gray";
+
+    function keyEvent(event) {
+      node.dispatchEvent(
+        new CustomEvent("customKeyPressed", { detail: { status } })
+      );
+    }
+
+    window.addEventListener("keydown", keyEvent);
+
+    return {
+      destroy() {
+        node.removeEventListener("keydown", keyEvent);
+      },
+    };
+  };
+
+  const textColorMaker = (letter) => {
+    status = letter.detail.status;
+    if (status === UNWRITTEN && $theme === THEMES.LIGHT)
+      console.log(letter.value, "gray");
+    else if (status === UNWRITTEN && $theme === THEMES.DARK)
+      console.log(letter.value, "black");
+    else if (status === CORRECT && $theme === THEMES.LIGHT)
+      console.log(letter.value, "black");
+    else if (status === CORRECT && $theme === THEMES.DARK)
+      console.log(letter.value, "gray");
+  };
 </script>
 
 <svelte:window on:keydown={handleKeyPress} />
 
 <div>
   {#each wordObject as { status, letter }}
-    <span class={status}>{letter}</span>
+    <span
+      class={status}
+      use:textColorFinder={status}
+      on:customKeyPressed={textColorMaker}>{letter}</span
+    >
   {/each}
 </div>
 
@@ -58,12 +95,12 @@
     font-size: var(--big-font);
     font-weight: bold;
   }
-  .unWritten {
+  /* .unWritten {
     color: gray;
   }
   .correct {
     color: black;
-  }
+  } */
   .incorrect {
     color: var(--orange);
   }
