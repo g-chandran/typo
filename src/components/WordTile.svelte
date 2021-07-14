@@ -17,6 +17,18 @@
     return true;
   };
 
+  const updateStatus = (index, status) => {
+    wordObject[index].status = status;
+    if (status == UNWRITTEN)
+      wordObject[index].letter_color =
+        $theme == THEMES.DARK ? COLORS.BLACK : "gray";
+    else if (status == CORRECT)
+      wordObject[index].letter_color =
+        $theme == THEMES.DARK ? "gray" : COLORS.BLACK;
+    else if (status == INCORRECT)
+      wordObject[index].letter_color = COLORS.ORANGE_COLOR;
+  };
+
   const handleKeyPress = (event) => {
     let key = event.key;
     const BACKSPACE_VALIDATION = key === "Backspace" && index > 0;
@@ -24,10 +36,10 @@
 
     if (BACKSPACE_VALIDATION) {
       index -= 1;
-      wordObject[index].status = UNWRITTEN;
+      updateStatus(index, UNWRITTEN);
     } else if (KEY_VALIDATION && key.match(/./)) {
-      if (wordObject[index].letter === key) wordObject[index].status = CORRECT;
-      else wordObject[index].status = INCORRECT;
+      if (wordObject[index].letter === key) updateStatus(index, CORRECT);
+      else updateStatus(index, INCORRECT);
       index += 1;
     }
   };
@@ -36,7 +48,11 @@
     word.split("");
     wordObject = new Array(word.length);
     for (let i = 0; i < word.length; i++)
-      wordObject[i] = { status: UNWRITTEN, letter: word[i] };
+      wordObject[i] = {
+        status: UNWRITTEN,
+        letter: word[i],
+        letter_color: $theme == THEMES.DARK ? COLORS.BLACK : "gray",
+      };
     index = 0;
   }
 
@@ -81,12 +97,8 @@
 <svelte:window on:keydown={handleKeyPress} />
 
 <div>
-  {#each wordObject as { status, letter }}
-    <span
-      class={status}
-      use:textColorFinder={status}
-      on:customKeyPressed={textColorMaker}>{letter}</span
-    >
+  {#each wordObject as { status, letter, letter_color }}
+    <span class={status} style="color: {letter_color};">{letter}</span>
   {/each}
 </div>
 
