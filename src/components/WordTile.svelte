@@ -60,38 +60,6 @@
     index = 0;
     dispatch("moveNext");
   }
-
-  const textColorFinder = (node, status) => {
-    if (status === STATUS.CORRECT) node.style.color = "black";
-    if (status === STATUS.INCORRECT) node.style.color = "yellow";
-    if (status === STATUS.UNWRITTEN) node.style.color = "gray";
-
-    function keyEvent(event) {
-      node.dispatchEvent(
-        new CustomEvent("customKeyPressed", { detail: { status } })
-      );
-    }
-
-    window.addEventListener("keydown", keyEvent);
-
-    return {
-      destroy() {
-        node.removeEventListener("keydown", keyEvent);
-      },
-    };
-  };
-
-  const textColorMaker = (letter) => {
-    status = letter.detail.status;
-    if (status === UNWRITTEN && $theme === THEMES.LIGHT)
-      console.log(letter.value, "gray");
-    else if (status === UNWRITTEN && $theme === THEMES.DARK)
-      console.log(letter.value, "black");
-    else if (status === CORRECT && $theme === THEMES.LIGHT)
-      console.log(letter.value, "black");
-    else if (status === CORRECT && $theme === THEMES.DARK)
-      console.log(letter.value, "gray");
-  };
 </script>
 
 <svelte:window on:keydown={handleKeyPress} />
