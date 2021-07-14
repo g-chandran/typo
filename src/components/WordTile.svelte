@@ -75,15 +75,6 @@
     font-size: var(--big-font);
     font-weight: bold;
   }
-  /* .unWritten {
-    color: gray;
-  }
-  .correct {
-    color: black;
-  } */
-  .incorrect {
-    color: var(--orange);
-  }
 
   @media only screen and (max-width: 480px) {
     span {
