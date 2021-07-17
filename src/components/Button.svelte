@@ -5,7 +5,7 @@
   const { ORANGE_COLOR, WHITE, BLACK } = COLORS;
 
   export let title = "";
-  export let name = "60 Seconds-Infinite Words";
+  export let name = "";
   export let onClickEventName = "customClick";
   export let onClickEventProps = {};
   export let backgroundColor = ORANGE_COLOR;

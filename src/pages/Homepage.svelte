@@ -25,7 +25,12 @@
       <CommandPalette on:suggestionHandled={hideCommandPalette} />
     </div>
   {/if}
-  <Button on:updateStage onClickEventName="updateStage" title="Start Typing" />
+  <Button
+    name="Type. Typo. Type."
+    on:updateStage
+    onClickEventName="updateStage"
+    title="Start Typing"
+  />
   <section
     style="color: {$theme === THEMES.DARK ? COLORS.WHITE : COLORS.BLACK};"
   >
