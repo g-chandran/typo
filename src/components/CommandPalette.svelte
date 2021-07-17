@@ -6,6 +6,11 @@
     COMMAND_FILTERS,
   } from "../stores/utils/commands.js";
 
+  import { theme } from "../stores/themeStore";
+  import { COLORS, THEMES, THEME_COLORS } from "../stores/utils/constants.js";
+
+  let { DARK_2, LIGHT_2 } = THEME_COLORS;
+
   import { createEventDispatcher } from "svelte";
 
   const { SETTINGS_FILTER, PLAYMODE_FILTER, THEME_FILTER } = COMMAND_FILTERS;
@@ -90,11 +95,19 @@
     suggestions[currentIndex].callee();
     dispatch("suggestionHandled");
   };
+
+  let backgroundColor;
+  let foregroundColor;
+
+  $: {
+    backgroundColor = $theme === THEMES.DARK ? DARK_2 : LIGHT_2;
+    foregroundColor = $theme === THEMES.DARK ? LIGHT_2 : DARK_2;
+  }
 </script>
 
 <svelte:window on:keydown={handleKeyPress} />
 
-<div class="command-palette">
+<div class="command-palette" style="background-color: {backgroundColor};">
   <section class="search-bar">
     <i class="material-icons">search</i>
     <input
@@ -102,6 +115,7 @@
       use:focusInput
       type="text"
       placeholder="just typo it"
+      style="background-color: {backgroundColor};"
     />
   </section>
   <hr />
@@ -110,15 +124,16 @@
       <p
         class:selected={currentIndex === index}
         on:click={() => handleClick(index)}
+        style="color: {$theme === THEMES.DARK ? COLORS.WHITE : COLORS.DARK};"
       >
         {suggestion.name}
       </p>
     {:else}
-      {#if command.length > 0}
-        <em>No matching commands</em>
-      {:else}
-        <em>>: theme, #: playmode, @: settings</em>
-      {/if}
+      <em style="color: {foregroundColor};"
+        >{command.length > 0
+          ? "No matching commands"
+          : ">: theme, #: playmode, @: settings"}</em
+      >
     {/each}
   </div>
 </div>

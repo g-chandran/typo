@@ -1,12 +1,14 @@
-import {updateTimerDuration} from './properties.js';
+import { THEMES } from "./constants";
+import { updateTimerDuration } from './properties.js';
+import { updateTheme } from "./propertiesInterface";
 
 
 /* 
   Commands for altering the theme can be added here
 */
 export const THEME_COMMANDS = [
-  {name: "Theme: Dark", callee: () => console.log("Dark theme")},
-  {name: "Theme: Light", callee: () => console.log("Light theme")},
+  {name: "Theme: Dark", callee: () => updateTheme(THEMES.DARK)},
+  {name: "Theme: Light", callee: () => updateTheme(THEMES.LIGHT)},
 ];
 
 /* 

@@ -6,6 +6,8 @@
   import { loadImages } from "./stores/imageStore.js";
   import { onMount } from "svelte";
   import Homepage from "./pages/Homepage.svelte";
+  import { theme } from "./stores/themeStore";
+  import { THEMES, THEME_COLORS } from "./stores/utils/constants";
 
   let { START, PROGRESS, END } = STAGES;
   let currentStage = START;
@@ -23,7 +25,11 @@
   onMount(loadImages);
 </script>
 
-<main>
+<main
+  style="background-color: {$theme === THEMES.DARK
+    ? THEME_COLORS.DARK_1
+    : THEME_COLORS.LIGHT_1};"
+>
   {#if currentStage === PROGRESS}
     <div transition:slide={{ duration: 200 }}>
       <TypeProgress on:updateStage={updateStage} />
@@ -51,9 +57,12 @@
   :global(:root) {
     --orange: #ff3e00;
     --med-orange: #ff40009f;
-    --black: #0c0c0c;
-    --white: #f0f0f0;
-    --background-color: #f2f2f2;
+    --dark-1: #28293d;
+    --dark-2: #555770;
+    --dark-3: #8f90a6;
+    --light-1: #fafafc;
+    --light-2: #f2f2f5;
+    --light-3: #ebebf0;
 
     --big-font: 2.5rem;
     --med-font: 2rem;
