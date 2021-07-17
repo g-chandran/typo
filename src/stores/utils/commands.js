@@ -1,6 +1,6 @@
 import { THEMES } from "./constants";
 import { updateTimerDuration } from './properties.js';
-import { updateTheme } from "./propertiesInterface";
+import { updateTheme, updateTimer } from "./propertiesInterface";
 
 
 /* 
@@ -25,9 +25,9 @@ export const PLAYMODE_COMMANDS = [
   - Timer updations can be added here with help of updateTimerDuration() from properties.js
 */
 export const SETTINGS_COMMANDS = [
-  {name: "Timer: 30s", callee: () => updateTimerDuration(30)},
-  {name: "Timer: 60s", callee: () => updateTimerDuration(60)},
-  {name: "Timer: 90s", callee: () => updateTimerDuration(90)},
+  {name: "Timer: 30s", callee: () => updateTimer(30)},
+  {name: "Timer: 60s", callee: () => updateTimer(60)},
+  {name: "Timer: 90s", callee: () => updateTimer(90)},
 ];
 
 export const COMMAND_FILTERS = Object.freeze(
