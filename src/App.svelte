@@ -3,10 +3,10 @@
   import Result from "./pages/Result.svelte";
   import { STAGES } from "./stores/utils/constants";
   import { slide } from "svelte/transition";
-  import { loadImages } from "./stores/imageStore.js";
+  import { loadImages } from "./stores/collections/imageCollection";
   import { onMount } from "svelte";
   import Homepage from "./pages/Homepage.svelte";
-  import { theme } from "./stores/themeStore";
+  import { theme } from "./stores/masterStore";
   import { THEMES, THEME_COLORS } from "./stores/utils/constants";
 
   let { START, PROGRESS, END } = STAGES;

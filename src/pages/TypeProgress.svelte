@@ -2,12 +2,10 @@
   import Button from "../components/Button.svelte";
   import { onMount, onDestroy } from "svelte";
   import Carousel from "../components/Carousel.svelte";
-  import { score } from "../stores/scoreStore";
-  import { timer } from "../stores/timerStore";
   import { getTimerDuration } from "../stores/utils/properties.js";
   import { createEventDispatcher } from "svelte";
   import { COLORS, THEMES, THEME_COLORS } from "../stores/utils/constants";
-  import { theme } from "../stores/themeStore";
+  import { theme, timer, score } from "../stores/masterStore";
 
   const updateScore = () => {
     score.update((e) => (e += 1));

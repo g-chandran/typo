@@ -1,11 +1,9 @@
 <script>
-  import { score } from "../stores/scoreStore.js";
-  import { timer } from "../stores/timerStore.js";
   import Button from "../components/Button.svelte";
   import { getTimerDuration } from "../stores/utils/properties.js";
   import { quintInOut } from "svelte/easing";
   import { COLORS, THEMES, THEME_COLORS } from "../stores/utils/constants";
-  import { theme } from "../stores/themeStore.js";
+  import { theme, timer, score } from "../stores/masterStore";
 
   let svgSource = Math.floor(Math.random() * 5);
   let image = false;

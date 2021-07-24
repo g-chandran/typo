@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import { THEMES, COLORS } from "../stores/utils/constants.js";
-  import { theme } from "../stores/themeStore";
+  import { theme } from "../stores/masterStore";
   const { ORANGE_COLOR, WHITE, BLACK } = COLORS;
 
   export let title = "";

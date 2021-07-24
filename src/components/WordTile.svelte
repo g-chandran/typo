@@ -2,7 +2,7 @@
   export let word = "typo";
   import { COLORS, STATUS, THEMES } from "../stores/utils/constants.js";
   import { createEventDispatcher } from "svelte";
-  import { theme } from "../stores/themeStore.js";
+  import { theme } from "../stores/masterStore";
 
   const { UNWRITTEN, CORRECT, INCORRECT } = STATUS;
   const dispatch = createEventDispatcher();
