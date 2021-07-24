@@ -7,7 +7,7 @@
     THREE_LETTER_WORDS,
     FIVE_LETTER_WORDS,
     SEVEN_LETTER_WORDS,
-  } from "../stores/wordStore.js";
+  } from "../stores/collections/wordCollection";
   import { WORD_SET_THRESHOLD } from "../stores/utils/constants.js";
 
   const dispatch = createEventDispatcher();

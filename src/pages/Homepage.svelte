@@ -2,7 +2,7 @@
   import Button from "../components/Button.svelte";
   import CommandPalette from "../components/CommandPalette.svelte";
   import { fly } from "svelte/transition";
-  import { theme } from "../stores/themeStore";
+  import { theme } from "../stores/masterStore";
   import { COLORS, THEMES } from "../stores/utils/constants";
 
   let isCommandPaletteActive = false;

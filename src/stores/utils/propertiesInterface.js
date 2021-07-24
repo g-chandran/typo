@@ -1,7 +1,6 @@
 import { setTheme } from "./properties";
 import { updateTimerDuration } from "./properties";
-import { theme } from "../themeStore";
-import { timer } from "../timerStore";
+import { theme, timer } from "../masterStore";
 
 export const updateTheme = (requestedTheme) => {
   setTheme(requestedTheme);

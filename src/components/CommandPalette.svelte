@@ -6,7 +6,7 @@
     COMMAND_FILTERS,
   } from "../stores/utils/commands.js";
 
-  import { theme } from "../stores/themeStore";
+  import { theme } from "../stores/masterStore";
   import { COLORS, THEMES, THEME_COLORS } from "../stores/utils/constants.js";
 
   let { DARK_2, LIGHT_2 } = THEME_COLORS;
