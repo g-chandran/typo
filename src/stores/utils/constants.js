@@ -20,3 +20,7 @@ export const THEME_COLORS = Object.freeze({
 });
 export const THEMES = Object.freeze({DARK: "dark", LIGHT: "light"})
 export const BUTTON_COLORS = Object.freeze({ORANGE: "orange", THEME: "theme"})
+export const PLAYMODES = Object.freeze({
+	CLASSIC: "classic",
+	REVERSE_CLASSIC: "reverse_classic"
+})
