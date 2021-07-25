@@ -16,7 +16,7 @@ export const THEME_COMMANDS = [
 */
 export const PLAYMODE_COMMANDS = [
   {name: "Playmode: Classic", callee: () => updatePlaymode(PLAYMODES.CLASSIC)},
-  {name: "Playmode: Reverse Classic", callee: () => console.log("Reverse Classic Mode")},
+  {name: "Playmode: Reverse Classic", callee: () => updatePlaymode(PLAYMODES.REVERSE_CLASSIC)},
 ];
 
 
