@@ -1,43 +1,41 @@
 <script>
   import Button from "../../components/Button.svelte";
-  import { onMount, onDestroy } from "svelte";
   import Carousel from "../../components/Carousel.svelte";
-  import { getTimerDuration } from "../../stores/utils/properties.js";
-  import { createEventDispatcher } from "svelte";
+  import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { THEMES, THEME_COLORS } from "../../stores/utils/constants";
-  import { theme, timer, score } from "../../stores/masterStore";
-
-  const updateScore = () => {
-    score.update((e) => (e += 1));
-  };
+  import { score, theme, timer } from "../../stores/masterStore";
+  import { getWordsLength } from "../../stores/utils/properties";
 
   const dispatch = createEventDispatcher();
-  const TIMER_DURATION = getTimerDuration();
+  const WORDS_LENGTH = getWordsLength();
+  const MAX_DURATION = 999;
 
   let interval;
 
-  const countdown = () => {
+  const countup = () => {
     interval = setInterval(() => {
-      if ($timer <= 0) {
+      if ($timer >= MAX_DURATION) {
         clearInterval(interval);
-      } else timer.update((e) => (e -= 1));
+      } else timer.update((e) => (e += 1));
     }, 1000);
   };
 
-  onMount(() => {
-    timer.set(TIMER_DURATION);
-    score.set(0);
-    countdown();
-  });
+  const updateScore = () => score.update((e) => (e -= 1));
 
-  $: if ($timer <= 0)
+  $: if ($score <= 0 || $timer >= MAX_DURATION)
     dispatch("updateStage", {
       result: result_text,
     });
 
-  $: result_text = `You scored ${$score} words in ${
-    TIMER_DURATION - $timer
-  } seconds`;
+  $: result_text = `You scored ${
+    WORDS_LENGTH - $score
+  } words in ${$timer} seconds`;
+
+  onMount(() => {
+    score.set(WORDS_LENGTH);
+    timer.set(0);
+    countup();
+  });
 
   onDestroy(() => clearInterval(interval));
 </script>
@@ -54,14 +52,12 @@
       onClickEventProps={{ position: true }}
       bold={true}
       on:updateStage
-      title="Score | Go Back"
+      title="Words Remaining | Go Back"
     />
     <Button
       bind:name={$timer}
       onClickEventName="updateStage"
-      onClickEventProps={{
-        result: result_text,
-      }}
+      onClickEventProps={{ result: result_text }}
       bold={true}
       on:updateStage
       title="Timer | Cancel"
