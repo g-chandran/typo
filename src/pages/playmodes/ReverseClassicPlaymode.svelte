@@ -21,7 +21,14 @@
 
   const updateScore = () => score.update((e) => (e -= 1));
 
-  $: if ($score <= 0) dispatch("updateStage", {});
+  $: if ($score <= 0)
+    dispatch("updateStage", {
+      result: result_text,
+    });
+
+  $: result_text = `You scored ${
+    WORDS_LENGTH - $score
+  } words in ${$timer} seconds`;
 
   onMount(() => {
     score.set(WORDS_LENGTH);
@@ -47,6 +54,7 @@
     <Button
       bind:name={$timer}
       onClickEventName="updateStage"
+      onClickEventProps={{ result: result_text }}
       bold={true}
       on:updateStage
       title="Timer | Cancel"

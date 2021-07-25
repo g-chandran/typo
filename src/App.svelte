@@ -12,6 +12,8 @@
   let { START, PROGRESS, END } = STAGES;
   let currentStage = START;
 
+  let result_text = "You scored 0 words in 0 seconds";
+
   const updateStage = (event) => {
     if (event.detail.position) {
       if (currentStage === PROGRESS) currentStage = START;
@@ -20,6 +22,7 @@
       else if (currentStage === PROGRESS) currentStage = END;
       else if (currentStage === END) currentStage = START;
     }
+    if (event.detail.result) result_text = event.detail.result;
   };
 
   onMount(loadImages);
@@ -36,7 +39,7 @@
     </div>
   {:else if currentStage === END}
     <div transition:slide={{ duration: 200 }}>
-      <Result on:updateStage={updateStage} />
+      <Result {result_text} on:updateStage={updateStage} />
     </div>
   {:else}
     <div transition:slide={{ duration: 200 }}>

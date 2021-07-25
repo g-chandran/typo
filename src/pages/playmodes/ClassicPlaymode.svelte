@@ -30,7 +30,14 @@
     countdown();
   });
 
-  $: if ($timer <= 0) dispatch("updateStage", {});
+  $: if ($timer <= 0)
+    dispatch("updateStage", {
+      result: result_text,
+    });
+
+  $: result_text = `You scored ${$score} words in ${
+    TIMER_DURATION - $timer
+  } seconds`;
 
   onDestroy(() => clearInterval(interval));
 </script>
@@ -52,6 +59,9 @@
     <Button
       bind:name={$timer}
       onClickEventName="updateStage"
+      onClickEventProps={{
+        result: result_text,
+      }}
       bold={true}
       on:updateStage
       title="Timer | Cancel"
