@@ -1,8 +1,9 @@
-import {THEMES} from './constants';
+import { THEMES, PLAYMODES } from './constants';
 
 const persistentProperties = [
     ['timer_duration', 60],
     ['theme', THEMES.LIGHT],
+    ['playmode', PLAYMODES.CLASSIC],
   ];
 
 let properties = new Map(persistentProperties);
@@ -26,3 +27,11 @@ export const toggleTheme = () => {
 }
 
 export const getTheme = () => properties.get('theme');
+
+export const setPlaymode = (playmode) => {
+  if ([PLAYMODES.CLASSIC, PLAYMODES.REVERSE_CLASSIC].includes(playmode)) {
+    properties.set('playmode', playmode);
+  }
+}
+
+export const getPlaymode = () => properties.get('playmode')

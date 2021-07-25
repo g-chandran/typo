@@ -1,6 +1,10 @@
-import { setTheme } from "./properties";
-import { updateTimerDuration } from "./properties";
-import { theme, timer } from "../masterStore";
+import { 
+  setTheme,
+  updateTimerDuration,
+  setPlaymode, 
+  getPlaymode
+} from "./properties";
+import { theme, timer, playmode } from "../masterStore";
 
 export const updateTheme = (requestedTheme) => {
   setTheme(requestedTheme);
@@ -10,4 +14,9 @@ export const updateTheme = (requestedTheme) => {
 export const updateTimer = (duration) => {
   updateTimerDuration(duration);
   timer.set(duration);
+}
+
+export const updatePlaymode = (requestedPlaymode) => {
+  setPlaymode(requestedPlaymode);
+  playmode.set(getPlaymode());
 }

@@ -1,6 +1,6 @@
-import { THEMES } from "./constants";
+import { PLAYMODES, THEMES } from "./constants";
 import { updateTimerDuration } from './properties.js';
-import { updateTheme, updateTimer } from "./propertiesInterface";
+import { updatePlaymode, updateTheme, updateTimer } from "./propertiesInterface";
 
 
 /* 
@@ -15,7 +15,7 @@ export const THEME_COMMANDS = [
   Commands for toggling between various playmodes can be added here.
 */
 export const PLAYMODE_COMMANDS = [
-  {name: "Playmode: Classic", callee: () => console.log("Classic Mode")},
+  {name: "Playmode: Classic", callee: () => updatePlaymode(PLAYMODES.CLASSIC)},
   {name: "Playmode: Reverse Classic", callee: () => console.log("Reverse Classic Mode")},
 ];
 
