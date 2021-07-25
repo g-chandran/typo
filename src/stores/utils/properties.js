@@ -4,6 +4,7 @@ const persistentProperties = [
     ['timer_duration', 60],
     ['theme', THEMES.LIGHT],
     ['playmode', PLAYMODES.CLASSIC],
+    ['words_length', 60],
   ];
 
 let properties = new Map(persistentProperties);
@@ -35,3 +36,5 @@ export const setPlaymode = (playmode) => {
 }
 
 export const getPlaymode = () => properties.get('playmode')
+
+export const getWordsLength = () => properties.get('words_length')
