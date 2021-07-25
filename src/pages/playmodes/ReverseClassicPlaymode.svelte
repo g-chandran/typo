@@ -2,8 +2,8 @@
   import Button from "../../components/Button.svelte";
   import Carousel from "../../components/Carousel.svelte";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
-  import { THEME_COLORS } from "../../stores/utils/constants";
-  import { score, timer } from "../../stores/masterStore";
+  import { THEMES, THEME_COLORS } from "../../stores/utils/constants";
+  import { score, theme, timer } from "../../stores/masterStore";
   import { getWordsLength } from "../../stores/utils/properties";
 
   const dispatch = createEventDispatcher();
@@ -44,7 +44,9 @@
   <div>
     <Button
       bind:name={$score}
-      backgroundColor={THEME_COLORS.LIGHT_3}
+      backgroundColor={$theme === THEMES.DARK
+        ? THEME_COLORS.DARK_3
+        : THEME_COLORS.LIGHT_3}
       onClickEventName="updateStage"
       onClickEventProps={{ position: true }}
       bold={true}
