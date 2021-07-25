@@ -8,12 +8,13 @@
 
   const dispatch = createEventDispatcher();
   const WORDS_LENGTH = getWordsLength();
+  const MAX_DURATION = 999;
 
   let interval;
 
   const countup = () => {
     interval = setInterval(() => {
-      if ($timer >= 500) {
+      if ($timer >= MAX_DURATION) {
         clearInterval(interval);
       } else timer.update((e) => (e += 1));
     }, 1000);
@@ -21,7 +22,7 @@
 
   const updateScore = () => score.update((e) => (e -= 1));
 
-  $: if ($score <= 0)
+  $: if ($score <= 0 || $timer >= MAX_DURATION)
     dispatch("updateStage", {
       result: result_text,
     });
