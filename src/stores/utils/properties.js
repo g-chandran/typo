@@ -37,4 +37,8 @@ export const setPlaymode = (playmode) => {
 
 export const getPlaymode = () => properties.get('playmode')
 
+export const setWordsLength = (length) => {
+  if ([30, 60, 90].includes(length)) properties.set('words_length', length);
+}
+
 export const getWordsLength = () => properties.get('words_length')
