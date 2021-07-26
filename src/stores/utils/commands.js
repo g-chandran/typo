@@ -1,6 +1,10 @@
 import { PLAYMODES, THEMES } from "./constants";
-import { updateTimerDuration } from './properties.js';
-import { updatePlaymode, updateTheme, updateTimer } from "./propertiesInterface";
+import { 
+  updatePlaymode,
+  updateTheme,
+  updateTimer,
+  updateWordsLength,
+} from "./propertiesInterface";
 
 
 /* 
@@ -28,6 +32,9 @@ export const SETTINGS_COMMANDS = [
   {name: "Timer: 30s", callee: () => updateTimer(30)},
   {name: "Timer: 60s", callee: () => updateTimer(60)},
   {name: "Timer: 90s", callee: () => updateTimer(90)},
+  {name: "Words Length: 30", callee: () => updateWordsLength(30)},
+  {name: "Words Length: 60", callee: () => updateWordsLength(60)},
+  {name: "Words Length: 90", callee: () => updateWordsLength(90)},
 ];
 
 export const COMMAND_FILTERS = Object.freeze(

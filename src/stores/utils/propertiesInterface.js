@@ -2,9 +2,11 @@ import {
   setTheme,
   updateTimerDuration,
   setPlaymode, 
-  getPlaymode
+  getPlaymode,
+  setWordsLength,
+  getWordsLength
 } from "./properties";
-import { theme, timer, playmode } from "../masterStore";
+import { theme, timer, playmode, wordsLength } from "../masterStore";
 
 export const updateTheme = (requestedTheme) => {
   setTheme(requestedTheme);
@@ -19,4 +21,9 @@ export const updateTimer = (duration) => {
 export const updatePlaymode = (requestedPlaymode) => {
   setPlaymode(requestedPlaymode);
   playmode.set(getPlaymode());
+}
+
+export const updateWordsLength = (length) => {
+  setWordsLength(length);
+  wordsLength.set(getWordsLength());
 }
