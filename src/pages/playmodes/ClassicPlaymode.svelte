@@ -1,9 +1,8 @@
 <script>
   import Button from "../../components/Button.svelte";
-  import { onMount, onDestroy } from "svelte";
+  import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import Carousel from "../../components/Carousel.svelte";
   import { getTimerDuration } from "../../stores/utils/properties.js";
-  import { createEventDispatcher } from "svelte";
   import { THEMES, THEME_COLORS } from "../../stores/utils/constants";
   import { theme, timer, score } from "../../stores/masterStore";
 

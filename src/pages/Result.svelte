@@ -32,7 +32,7 @@
     src={`./assets/svgs/svg${svgSource}.svg`}
     alt="Sorry"
   />
-  <p style="color: {$theme == THEMES.DARK ? COLORS.WHITE : COLORS.BLACK};">
+  <p style="color: {$theme === THEMES.DARK ? COLORS.WHITE : COLORS.BLACK};">
     {result_text}
   </p>
   <Button
