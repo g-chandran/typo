@@ -10,4 +10,4 @@
   };
 </script>
 
-<svelte:component this={playmodes[$playmode]} on:updateStage />
+<svelte:component this={playmodes[$playmode]} on:updateStage|once />
