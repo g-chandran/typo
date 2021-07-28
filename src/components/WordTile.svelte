@@ -21,10 +21,10 @@
     wordObject[index].status = status;
     if (status == UNWRITTEN)
       wordObject[index].letter_color =
-        $theme == THEMES.DARK ? COLORS.BLACK : "gray";
+        $theme == THEMES.DARK ? COLORS.BLACK : COLORS.GRAY;
     else if (status == CORRECT)
       wordObject[index].letter_color =
-        $theme == THEMES.DARK ? "gray" : COLORS.BLACK;
+        $theme == THEMES.DARK ? COLORS.GRAY : COLORS.BLACK;
     else if (status == INCORRECT)
       wordObject[index].letter_color = COLORS.ORANGE_COLOR;
   };
@@ -51,7 +51,7 @@
       wordObject[i] = {
         status: UNWRITTEN,
         letter: word[i],
-        letter_color: $theme == THEMES.DARK ? COLORS.BLACK : "gray",
+        letter_color: $theme == THEMES.DARK ? COLORS.BLACK : COLORS.GRAY,
       };
     index = 0;
   }

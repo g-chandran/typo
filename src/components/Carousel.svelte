@@ -8,7 +8,12 @@
     FIVE_LETTER_WORDS,
     SEVEN_LETTER_WORDS,
   } from "../stores/collections/wordCollection";
-  import { WORD_SET_THRESHOLD } from "../stores/utils/constants.js";
+  import {
+    COLORS,
+    THEMES,
+    WORD_SET_THRESHOLD,
+  } from "../stores/utils/constants.js";
+  import { theme } from "../stores/masterStore";
 
   const dispatch = createEventDispatcher();
 
@@ -27,6 +32,7 @@
 
   let maxValues = WORD_SET_THRESHOLD;
   let index = 0;
+  const WORDS_COLOR = $theme === THEMES.LIGHT ? COLORS.BLACK : COLORS.GRAY;
 
   onMount(() => updatePipeline());
 
@@ -57,11 +63,11 @@
   {#each wordList.slice(index, index + 3) as word, ind (word)}
     <div animate:flip={{ duration: 200 }}>
       {#if ind === 1}
-        <div class="word1">
+        <div style="text-align: center;" class="word1">
           <WordTile on:moveNext={update} bind:word />
         </div>
       {:else}
-        <p class={`word${ind}`}>{word}</p>
+        <p style="color: {WORDS_COLOR};" class={`word${ind}`}>{word}</p>
       {/if}
     </div>
   {/each}
@@ -82,12 +88,8 @@
 
   .word0 {
     text-align: left;
-    color: linear-gradient(to right, green, red, green);
   }
 
-  .word1 {
-    text-align: center;
-  }
   .word2 {
     text-align: right;
   }
