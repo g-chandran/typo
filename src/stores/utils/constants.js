@@ -27,6 +27,6 @@ export const PLAYMODES = Object.freeze({
 
 export const ABOUT_INFO = Object.freeze({
 	TITLE: "You're here. Woo-hoo! Start typing to know about Typo.",
-	CONTENT: "typo:a fast,:powerful,:playful app:to improve your typing skills.:" + 
-					"playmodes,:settings,:themes:to make it more fun.:now type it,:typo it,:repeat it.:it keeps evolving."
+	CONTENT: "Typo.:A Fast,:Powerful,:Playful app:to improve your typing skills.:" + 
+					"Playmodes,:Settings,:Themes:to make it more fun.:Now type it,:Typo it,:repeat it.:It keeps Evolving."
 })
