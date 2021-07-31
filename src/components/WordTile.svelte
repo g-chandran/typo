@@ -17,8 +17,9 @@
     return true;
   };
 
-  const updateStatus = (index, status) => {
+  const updateStatus = (index, status, bgColor = "") => {
     wordObject[index].status = status;
+    wordObject[index].background_color = bgColor;
     if (status == UNWRITTEN)
       wordObject[index].letter_color =
         $theme == THEMES.DARK ? COLORS.BLACK : COLORS.GRAY;
@@ -39,7 +40,11 @@
       updateStatus(index, UNWRITTEN);
     } else if (KEY_VALIDATION && key.match(/./)) {
       if (wordObject[index].letter === key) updateStatus(index, CORRECT);
-      else updateStatus(index, INCORRECT);
+      else {
+        if (wordObject[index].letter === " " && key !== " ")
+          updateStatus(index, INCORRECT, COLORS.ORANGE_COLOR);
+        else updateStatus(index, INCORRECT);
+      }
       index += 1;
     }
   };
@@ -65,8 +70,12 @@
 <svelte:window on:keydown={handleKeyPress} />
 
 <div>
-  {#each wordObject as { status, letter, letter_color }}
-    <span class={status} style="color: {letter_color};">{letter}</span>
+  {#each wordObject as { status, letter, letter_color, background_color }}
+    <span
+      class={status}
+      style="color: {letter_color}; background-color: {background_color};"
+      >{letter}</span
+    >
   {/each}
 </div>
 
