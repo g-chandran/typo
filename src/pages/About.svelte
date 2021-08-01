@@ -37,9 +37,8 @@
     <Button
       title="Go to homepage"
       name="Home"
-      onClickEventName="updateStage"
-      onClickEventProps={{ position: true }}
-      on:updateStage
+      onClickEventName="setStage"
+      on:setStage
     />
   </section>
 </div>

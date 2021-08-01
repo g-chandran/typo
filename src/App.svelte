@@ -8,11 +8,16 @@
   import Homepage from "./pages/Homepage.svelte";
   import { theme } from "./stores/masterStore";
   import { THEMES, THEME_COLORS } from "./stores/utils/constants";
+  import About from "./pages/About.svelte";
 
-  let { START, PROGRESS, END } = STAGES;
+  let { START, PROGRESS, END, ABOUT } = STAGES;
   let currentStage = START;
 
   let result_text = "You scored 0 words in 0 seconds";
+
+  const setStage = (stage) => {
+    if (Object.values(STAGES).includes(stage)) currentStage = stage;
+  };
 
   const updateStage = (event) => {
     if (event.detail.position) {
@@ -40,6 +45,10 @@
   {:else if currentStage === END}
     <div transition:slide={{ duration: 200 }}>
       <Result {result_text} on:updateStage={updateStage} />
+    </div>
+  {:else if currentStage === ABOUT}
+    <div transition:slide={{ duration: 200 }}>
+      <About on:setStage={() => setStage(START)} />
     </div>
   {:else}
     <div transition:slide={{ duration: 200 }}>
