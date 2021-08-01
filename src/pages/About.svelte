@@ -1,13 +1,19 @@
 <script>
   import WordTile from "../components/WordTile.svelte";
   import Button from "../components/Button.svelte";
-  import { ABOUT_INFO, THEMES, THEME_COLORS } from "../stores/utils/constants";
+  import {
+    ABOUT_INFO,
+    THEMES,
+    THEME_COLORS,
+    COLORS,
+  } from "../stores/utils/constants";
   import { aboutStore, theme } from "../stores/masterStore";
   const { CONTENT, TITLE } = ABOUT_INFO;
 
   const wordList = CONTENT.toLowerCase().split(":");
 
   let lastWord = false;
+  const WORDS_COLOR = $theme === THEMES.LIGHT ? COLORS.BLACK : COLORS.GRAY;
 
   $: index = 0;
 
@@ -21,7 +27,7 @@
 </script>
 
 <div class="container">
-  <p>{TITLE}</p>
+  <p style="color: {WORDS_COLOR};">{TITLE}</p>
   <WordTile word={wordList[index]} on:moveNext={updateWord} {lastWord} />
   <section class="actions">
     <Button
