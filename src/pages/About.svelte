@@ -21,12 +21,12 @@
 </script>
 
 <div class="container">
-  <h2>{TITLE}</h2>
+  <p>{TITLE}</p>
   <WordTile word={wordList[index]} on:moveNext={updateWord} {lastWord} />
   <section class="actions">
     <Button
       title="View the original source code of the application on Github"
-      name="Show source"
+      name="Source"
       backgroundColor={$theme === THEMES.DARK
         ? THEME_COLORS.DARK_3
         : THEME_COLORS.LIGHT_3}
@@ -36,10 +36,24 @@
     />
     <Button
       title="Go to homepage"
-      name="Go home"
+      name="Home"
       onClickEventName="updateStage"
       onClickEventProps={{ position: true }}
       on:updateStage
     />
   </section>
 </div>
+
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    align-items: center;
+  }
+  p {
+    text-align: center;
+    font-weight: bold;
+    font-size: var(--med-font-2);
+  }
+</style>
