@@ -14,7 +14,6 @@
   let currentStage = START;
 
   let result_text = "You scored 0 words in 0 seconds";
-  let os = "Windows";
 
   $: currentStage = $aboutStore ? ABOUT : START;
 
@@ -35,25 +34,24 @@
     const macosPlatforms = ["Macintosh", "MacIntel", "MacPPC", "Mac68K"];
     const windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"];
     const iosPlatforms = ["iPhone", "iPad", "iPod"];
+    let os = null;
 
     if (macosPlatforms.indexOf(platform) !== -1) {
-      return "MacOS";
+      os = "MacOS";
     } else if (iosPlatforms.indexOf(platform) !== -1) {
-      return "iOS";
+      os = "iOS";
     } else if (windowsPlatforms.indexOf(platform) !== -1) {
-      return "Windows";
+      os = "Windows";
     } else if (/Android/.test(userAgent)) {
-      return "Android";
+      os = "Android";
     } else if (!os && /Linux/.test(platform)) {
-      return "Linux";
+      os = "Linux";
     }
-    return null;
+    return os;
   };
 
-  onMount(() => {
-    loadImages();
-    os = getOS();
-  });
+  let os = getOS();
+  onMount(loadImages);
 </script>
 
 <main
