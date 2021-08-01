@@ -2,7 +2,7 @@
   import WordTile from "../components/WordTile.svelte";
   import Button from "../components/Button.svelte";
   import { ABOUT_INFO, THEMES, THEME_COLORS } from "../stores/utils/constants";
-  import { theme } from "../stores/masterStore";
+  import { aboutStore, theme } from "../stores/masterStore";
   const { CONTENT, TITLE } = ABOUT_INFO;
 
   const wordList = CONTENT.toLowerCase().split(":");
@@ -38,7 +38,7 @@
       title="Go to homepage"
       name="Home"
       onClickEventName="setStage"
-      on:setStage
+      on:setStage={() => aboutStore.set(false)}
     />
   </section>
 </div>

@@ -6,7 +6,7 @@
   import { loadImages } from "./stores/collections/imageCollection";
   import { onMount } from "svelte";
   import Homepage from "./pages/Homepage.svelte";
-  import { theme } from "./stores/masterStore";
+  import { theme, aboutStore } from "./stores/masterStore";
   import { THEMES, THEME_COLORS } from "./stores/utils/constants";
   import About from "./pages/About.svelte";
 
@@ -15,9 +15,7 @@
 
   let result_text = "You scored 0 words in 0 seconds";
 
-  const setStage = (stage) => {
-    if (Object.values(STAGES).includes(stage)) currentStage = stage;
-  };
+  $: currentStage = $aboutStore ? ABOUT : START;
 
   const updateStage = (event) => {
     if (event.detail.position) {
@@ -48,7 +46,7 @@
     </div>
   {:else if currentStage === ABOUT}
     <div transition:slide={{ duration: 200 }}>
-      <About on:setStage={() => setStage(START)} />
+      <About />
     </div>
   {:else}
     <div transition:slide={{ duration: 200 }}>

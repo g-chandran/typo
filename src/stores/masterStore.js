@@ -6,3 +6,4 @@ export const score = writable(0);
 export const theme = writable(getTheme());
 export const playmode = writable(getPlaymode());
 export const wordsLength = writable(getWordsLength());
+export const aboutStore = writable(false);
