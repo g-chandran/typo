@@ -5,12 +5,16 @@
   import { theme } from "../stores/masterStore";
   import { COLORS, THEMES } from "../stores/utils/constants";
 
+  export let os = "Windows";
+
+  const modifierKey = os === "MacOS" ? "Cmd" : "Ctrl";
+
   let isCommandPaletteActive = false;
 
   const hideCommandPalette = () => (isCommandPaletteActive = false);
 
   const handleKeys = (event) => {
-    if (event.ctrlKey && event.code === "Space") {
+    if ((event.ctrlKey || event.metaKey) && event.code === "Space") {
       isCommandPaletteActive = !isCommandPaletteActive;
     }
     if (event.code === "Enter" || event.code === "Escape") hideCommandPalette();
@@ -34,7 +38,7 @@
   <section
     style="color: {$theme === THEMES.DARK ? COLORS.WHITE : COLORS.BLACK};"
   >
-    <span>Ctrl</span>
+    <span>{modifierKey}</span>
     +
     <span>Space</span>
   </section>

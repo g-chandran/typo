@@ -14,6 +14,7 @@
   let currentStage = START;
 
   let result_text = "You scored 0 words in 0 seconds";
+  let os = "Windows";
 
   $: currentStage = $aboutStore ? ABOUT : START;
 
@@ -28,7 +29,31 @@
     if (event.detail.result) result_text = event.detail.result;
   };
 
-  onMount(loadImages);
+  const getOS = () => {
+    const userAgent = window.navigator.userAgent;
+    const platform = window.navigator.platform;
+    const macosPlatforms = ["Macintosh", "MacIntel", "MacPPC", "Mac68K"];
+    const windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"];
+    const iosPlatforms = ["iPhone", "iPad", "iPod"];
+
+    if (macosPlatforms.indexOf(platform) !== -1) {
+      return "MacOS";
+    } else if (iosPlatforms.indexOf(platform) !== -1) {
+      return "iOS";
+    } else if (windowsPlatforms.indexOf(platform) !== -1) {
+      return "Windows";
+    } else if (/Android/.test(userAgent)) {
+      return "Android";
+    } else if (!os && /Linux/.test(platform)) {
+      return "Linux";
+    }
+    return null;
+  };
+
+  onMount(() => {
+    loadImages();
+    os = getOS();
+  });
 </script>
 
 <main
@@ -50,7 +75,7 @@
     </div>
   {:else}
     <div transition:slide={{ duration: 200 }}>
-      <Homepage on:updateStage={updateStage} />
+      <Homepage {os} on:updateStage={updateStage} />
     </div>
   {/if}
 </main>
