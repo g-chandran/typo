@@ -1,8 +1,10 @@
 <script>
-  export let word = "typo";
   import { COLORS, STATUS, THEMES } from "../stores/utils/constants.js";
   import { createEventDispatcher } from "svelte";
   import { theme } from "../stores/masterStore";
+
+  export let word = "typo";
+  export let lastWord = false;
 
   const { UNWRITTEN, CORRECT, INCORRECT } = STATUS;
   const dispatch = createEventDispatcher();
@@ -31,6 +33,7 @@
   };
 
   const handleKeyPress = (event) => {
+    if (lastWord) return;
     let key = event.key;
     const BACKSPACE_VALIDATION = key === "Backspace" && index > 0;
     const KEY_VALIDATION = key.length === 1 && index < wordObject.length;
