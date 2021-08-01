@@ -21,6 +21,7 @@
   let dispatch = createEventDispatcher();
 
   const clickEvent = () => {
+    document.querySelector("button").blur();
     dispatch(onClickEventName, onClickEventProps);
   };
 </script>

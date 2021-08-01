@@ -63,7 +63,7 @@
   {#each wordList.slice(index, index + 3) as word, ind (word)}
     <div animate:flip={{ duration: 200 }}>
       {#if ind === 1}
-        <div style="text-align: center;" class="word1">
+        <div style="text-align: center;">
           <WordTile on:moveNext={update} bind:word />
         </div>
       {:else}

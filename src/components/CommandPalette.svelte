@@ -3,6 +3,7 @@
     THEME_COMMANDS,
     SETTINGS_COMMANDS,
     PLAYMODE_COMMANDS,
+    MISC_COMMANDS,
     COMMAND_FILTERS,
   } from "../stores/utils/commands.js";
 
@@ -20,7 +21,12 @@
 
   let currentIndex = 0;
   let suggestions = [];
-  let filters = [THEME_COMMANDS, PLAYMODE_COMMANDS, SETTINGS_COMMANDS];
+  let filters = [
+    THEME_COMMANDS,
+    PLAYMODE_COMMANDS,
+    SETTINGS_COMMANDS,
+    MISC_COMMANDS,
+  ];
   let command = "";
 
   /* 
@@ -30,7 +36,13 @@
     if (command[0] === THEME_FILTER) filters = [THEME_COMMANDS];
     else if (command[0] === PLAYMODE_FILTER) filters = [PLAYMODE_COMMANDS];
     else if (command[0] === SETTINGS_FILTER) filters = [SETTINGS_COMMANDS];
-    else filters = [THEME_COMMANDS, PLAYMODE_COMMANDS, SETTINGS_COMMANDS];
+    else
+      filters = [
+        THEME_COMMANDS,
+        PLAYMODE_COMMANDS,
+        SETTINGS_COMMANDS,
+        MISC_COMMANDS,
+      ];
     updateSuggestions();
   }
 

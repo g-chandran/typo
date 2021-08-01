@@ -5,7 +5,7 @@ import {
   updateTimer,
   updateWordsLength,
 } from "./propertiesInterface";
-
+import { aboutStore } from "../masterStore";
 
 /* 
   Commands for altering the theme can be added here
@@ -35,6 +35,10 @@ export const SETTINGS_COMMANDS = [
   {name: "Words Length: 30", callee: () => updateWordsLength(30)},
   {name: "Words Length: 60", callee: () => updateWordsLength(60)},
   {name: "Words Length: 90", callee: () => updateWordsLength(90)},
+];
+
+export const MISC_COMMANDS = [
+  {name: "About Typo", callee: () => aboutStore.update(about => about = !about)},
 ];
 
 export const COMMAND_FILTERS = Object.freeze(

@@ -2,6 +2,7 @@ export const STAGES = Object.freeze({
 	START: "start",
 	END: "end",
 	PROGRESS: "progress",
+	ABOUT: "about",
 });
 
 export const STATUS = Object.freeze({
@@ -23,4 +24,10 @@ export const BUTTON_COLORS = Object.freeze({ORANGE: "orange", THEME: "theme"})
 export const PLAYMODES = Object.freeze({
 	CLASSIC: "classic",
 	REVERSE_CLASSIC: "reverse_classic"
+})
+
+export const ABOUT_INFO = Object.freeze({
+	TITLE: "You're here. Woo-hoo! Start typing to know about Typo.",
+	CONTENT: "Typo.:A Fast,:Powerful,:Playful app:to improve your typing skills.:" + 
+					"Playmodes,:Settings,:Themes:to make it more fun.:Now type it,:Typo it,:repeat it.:It keeps Evolving."
 })
