@@ -5,7 +5,7 @@
   import { theme } from "../stores/masterStore";
   import { COLORS, THEMES } from "../stores/utils/constants";
 
-  export let os = "Windows";
+  export let os;
 
   const modifierKey = os === "MacOS" ? "Cmd" : "Ctrl";
 
