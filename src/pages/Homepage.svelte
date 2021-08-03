@@ -15,6 +15,7 @@
 
   const handleKeys = (event) => {
     if ((event.ctrlKey || event.metaKey) && event.code === "Space") {
+      event.preventDefault();
       isCommandPaletteActive = !isCommandPaletteActive;
     }
     if (event.code === "Enter" || event.code === "Escape") hideCommandPalette();
