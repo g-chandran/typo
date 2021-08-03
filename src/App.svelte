@@ -9,6 +9,7 @@
   import { theme, aboutStore } from "./stores/masterStore";
   import { THEMES, THEME_COLORS } from "./stores/utils/constants";
   import About from "./pages/About.svelte";
+  import Unsupported from "./pages/Unsupported.svelte";
 
   let { START, PROGRESS, END, ABOUT } = STAGES;
   let currentStage = START;
@@ -59,7 +60,9 @@
     ? THEME_COLORS.DARK_1
     : THEME_COLORS.LIGHT_1};"
 >
-  {#if currentStage === PROGRESS}
+  {#if os === "Android" || os === "iOS"}
+    <Unsupported {os} />
+  {:else if currentStage === PROGRESS}
     <div transition:slide={{ duration: 200 }}>
       <TypeProgress on:updateStage={updateStage} />
     </div>
