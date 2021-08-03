@@ -52,7 +52,9 @@
   };
 
   let os = getOS();
-  onMount(loadImages);
+  onMount(() => {
+    if (os !== "Android" || os !== "iOS") loadImages();
+  });
 </script>
 
 <main
