@@ -11,7 +11,6 @@
 
   let isCommandPaletteActive = false;
 
-  const hideCommandPalette = () => (isCommandPaletteActive = false);
   const updateCommandPalette = (updateTo = null) => {
     if (updateTo === null) isCommandPaletteActive = !isCommandPaletteActive;
     else if (typeof updateTo === typeof true) {
@@ -38,7 +37,9 @@
 <div>
   {#if isCommandPaletteActive}
     <div transition:fly={{ duration: 100, y: -200 }}>
-      <CommandPalette on:suggestionHandled={hideCommandPalette} />
+      <CommandPalette
+        on:suggestionHandled={() => updateCommandPalette(false)}
+      />
     </div>
   {/if}
   <Button
