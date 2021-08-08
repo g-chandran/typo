@@ -1,13 +1,13 @@
 <script>
   import Button from "../components/Button.svelte";
-  import { getTimerDuration } from "../stores/utils/properties.js";
   import { quintInOut } from "svelte/easing";
   import { COLORS, THEMES, THEME_COLORS } from "../stores/utils/constants";
-  import { theme, timer, score } from "../stores/masterStore";
+  import { theme } from "../stores/masterStore";
+
+  export let result_text = "";
 
   let svgSource = Math.floor(Math.random() * 5);
   let image = false;
-  const TIMER_DURATION = getTimerDuration();
 
   const loadSVG = (node, { duration = 200 }) => {
     return {
@@ -32,9 +32,8 @@
     src={`./assets/svgs/svg${svgSource}.svg`}
     alt="Sorry"
   />
-  <p style="color: {$theme == THEMES.DARK ? COLORS.WHITE : COLORS.BLACK};">
-    You typed {$score}
-    {#if $score === 1}word{:else}words{/if} in {TIMER_DURATION - $timer} seconds
+  <p style="color: {$theme === THEMES.DARK ? COLORS.WHITE : COLORS.BLACK};">
+    {result_text}
   </p>
   <Button
     title="Start again"
@@ -43,6 +42,7 @@
       ? THEME_COLORS.DARK_3
       : THEME_COLORS.LIGHT_3}
     onClickEventName="updateStage"
+    onClickEventProps={{ result: "You scored 0 words in 0 seconds" }}
     on:updateStage
   />
 </div>

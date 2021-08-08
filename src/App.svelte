@@ -6,11 +6,17 @@
   import { loadImages } from "./stores/collections/imageCollection";
   import { onMount } from "svelte";
   import Homepage from "./pages/Homepage.svelte";
-  import { theme } from "./stores/masterStore";
+  import { theme, aboutStore } from "./stores/masterStore";
   import { THEMES, THEME_COLORS } from "./stores/utils/constants";
+  import About from "./pages/About.svelte";
+  import Unsupported from "./pages/Unsupported.svelte";
 
-  let { START, PROGRESS, END } = STAGES;
+  let { START, PROGRESS, END, ABOUT } = STAGES;
   let currentStage = START;
+
+  let result_text = "You scored 0 words in 0 seconds";
+
+  $: currentStage = $aboutStore ? ABOUT : START;
 
   const updateStage = (event) => {
     if (event.detail.position) {
@@ -20,9 +26,35 @@
       else if (currentStage === PROGRESS) currentStage = END;
       else if (currentStage === END) currentStage = START;
     }
+    if (event.detail.result) result_text = event.detail.result;
   };
 
-  onMount(loadImages);
+  const getOS = () => {
+    const userAgent = window.navigator.userAgent;
+    const platform = window.navigator.platform;
+    const macosPlatforms = ["Macintosh", "MacIntel", "MacPPC", "Mac68K"];
+    const windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"];
+    const iosPlatforms = ["iPhone", "iPad", "iPod"];
+    let os = null;
+
+    if (macosPlatforms.indexOf(platform) !== -1) {
+      os = "MacOS";
+    } else if (iosPlatforms.indexOf(platform) !== -1) {
+      os = "iOS";
+    } else if (windowsPlatforms.indexOf(platform) !== -1) {
+      os = "Windows";
+    } else if (/Android/.test(userAgent)) {
+      os = "Android";
+    } else if (!os && /Linux/.test(platform)) {
+      os = "Linux";
+    }
+    return os;
+  };
+
+  let os = getOS();
+  onMount(() => {
+    if (os !== "Android" || os !== "iOS") loadImages();
+  });
 </script>
 
 <main
@@ -30,17 +62,23 @@
     ? THEME_COLORS.DARK_1
     : THEME_COLORS.LIGHT_1};"
 >
-  {#if currentStage === PROGRESS}
+  {#if os === "Android" || os === "iOS"}
+    <Unsupported {os} />
+  {:else if currentStage === PROGRESS}
     <div transition:slide={{ duration: 200 }}>
       <TypeProgress on:updateStage={updateStage} />
     </div>
   {:else if currentStage === END}
     <div transition:slide={{ duration: 200 }}>
-      <Result on:updateStage={updateStage} />
+      <Result {result_text} on:updateStage={updateStage} />
+    </div>
+  {:else if currentStage === ABOUT}
+    <div transition:slide={{ duration: 200 }}>
+      <About />
     </div>
   {:else}
     <div transition:slide={{ duration: 200 }}>
-      <Homepage on:updateStage={updateStage} />
+      <Homepage {os} on:updateStage={updateStage} />
     </div>
   {/if}
 </main>

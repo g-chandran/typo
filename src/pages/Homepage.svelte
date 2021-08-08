@@ -5,15 +5,30 @@
   import { theme } from "../stores/masterStore";
   import { COLORS, THEMES } from "../stores/utils/constants";
 
+  export let os;
+
+  const modifierKey = os === "MacOS" ? "Option" : "Ctrl";
+
   let isCommandPaletteActive = false;
 
-  const hideCommandPalette = () => (isCommandPaletteActive = false);
+  const updateCommandPalette = (updateTo = null) => {
+    if (updateTo === null) isCommandPaletteActive = !isCommandPaletteActive;
+    else if (typeof updateTo === typeof true) {
+      isCommandPaletteActive = updateTo;
+    }
+  };
 
   const handleKeys = (event) => {
-    if (event.ctrlKey && event.code === "Space") {
-      isCommandPaletteActive = !isCommandPaletteActive;
+    const toggleCommandPalette =
+      ((os === "MacOS" && event.altKey) ||
+        (os === "Windows" && event.ctrlKey)) &&
+      event.code === "Space";
+    if (toggleCommandPalette) {
+      event.preventDefault();
+      updateCommandPalette();
     }
-    if (event.code === "Enter" || event.code === "Escape") hideCommandPalette();
+    if (event.code === "Enter" || event.code === "Escape")
+      updateCommandPalette(false);
   };
 </script>
 
@@ -22,7 +37,9 @@
 <div>
   {#if isCommandPaletteActive}
     <div transition:fly={{ duration: 100, y: -200 }}>
-      <CommandPalette on:suggestionHandled={hideCommandPalette} />
+      <CommandPalette
+        on:suggestionHandled={() => updateCommandPalette(false)}
+      />
     </div>
   {/if}
   <Button
@@ -34,7 +51,7 @@
   <section
     style="color: {$theme === THEMES.DARK ? COLORS.WHITE : COLORS.BLACK};"
   >
-    <span>Ctrl</span>
+    <span>{modifierKey}</span>
     +
     <span>Space</span>
   </section>
