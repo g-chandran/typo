@@ -7,18 +7,28 @@
 
   export let os;
 
-  const modifierKey = os === "MacOS" ? "Cmd" : "Ctrl";
+  const modifierKey = os === "MacOS" ? "Option" : "Ctrl";
 
   let isCommandPaletteActive = false;
 
-  const hideCommandPalette = () => (isCommandPaletteActive = false);
+  const updateCommandPalette = (updateTo = null) => {
+    if (updateTo === null) isCommandPaletteActive = !isCommandPaletteActive;
+    else if (typeof updateTo === typeof true) {
+      isCommandPaletteActive = updateTo;
+    }
+  };
 
   const handleKeys = (event) => {
-    if ((event.ctrlKey || event.metaKey) && event.code === "Space") {
+    const toggleCommandPalette =
+      ((os === "MacOS" && event.altKey) ||
+        (os === "Windows" && event.ctrlKey)) &&
+      event.code === "Space";
+    if (toggleCommandPalette) {
       event.preventDefault();
-      isCommandPaletteActive = !isCommandPaletteActive;
+      updateCommandPalette();
     }
-    if (event.code === "Enter" || event.code === "Escape") hideCommandPalette();
+    if (event.code === "Enter" || event.code === "Escape")
+      updateCommandPalette(false);
   };
 </script>
 
@@ -27,7 +37,9 @@
 <div>
   {#if isCommandPaletteActive}
     <div transition:fly={{ duration: 100, y: -200 }}>
-      <CommandPalette on:suggestionHandled={hideCommandPalette} />
+      <CommandPalette
+        on:suggestionHandled={() => updateCommandPalette(false)}
+      />
     </div>
   {/if}
   <Button
