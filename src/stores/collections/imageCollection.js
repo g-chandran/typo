@@ -14,4 +14,4 @@ export const loadImages = async () => {
     image.alt = "";
     images[i] = image;
   }
-}
+};

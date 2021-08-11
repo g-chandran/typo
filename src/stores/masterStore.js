@@ -1,5 +1,10 @@
 import { writable } from "svelte/store";
-import { getTimerDuration, getTheme, getPlaymode, getWordsLength } from "./utils/properties";
+import {
+  getTimerDuration,
+  getTheme,
+  getPlaymode,
+  getWordsLength,
+} from "./utils/properties";
 
 export const timer = writable(getTimerDuration());
 export const score = writable(0);
