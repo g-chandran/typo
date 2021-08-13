@@ -6,10 +6,10 @@
   import { onMount } from "svelte";
   import Homepage from "./pages/Homepage.svelte";
   import { theme, aboutStore } from "./stores/masterStore";
-  import { THEMES, THEME_COLORS } from "./stores/utils/constants";
+  import { THEME_COLORS } from "./stores/utils/constants";
   import About from "./pages/About.svelte";
   import Unsupported from "./pages/Unsupported.svelte";
-  import type { Stages } from "../src/types/mainTypes";
+  import type { Stages, Themes, OS, UpdateStage } from "../src/types/mainTypes";
 
   let currentStage: Stages = "start";
 
@@ -17,7 +17,10 @@
 
   $: currentStage = $aboutStore ? "about" : "start";
 
-  const updateStage = (event) => {
+  const updateStage = (
+    // TODO: The Optional should be changed after the updateStage CustomEvent is updated everywhere
+    event: CustomEvent<UpdateStage>
+  ): void => {
     if (event.detail.position) {
       if (currentStage === "progress") currentStage = "start";
     } else {
@@ -28,13 +31,18 @@
     if (event.detail.result) result_text = event.detail.result;
   };
 
-  const getOS = () => {
-    const userAgent = window.navigator.userAgent;
-    const platform = window.navigator.platform;
-    const macosPlatforms = ["Macintosh", "MacIntel", "MacPPC", "Mac68K"];
-    const windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"];
-    const iosPlatforms = ["iPhone", "iPad", "iPod"];
-    let os = null;
+  const getOS = (): OS => {
+    const userAgent: string = window.navigator.userAgent;
+    const platform: string = window.navigator.platform;
+    const macosPlatforms: string[] = [
+      "Macintosh",
+      "MacIntel",
+      "MacPPC",
+      "Mac68K",
+    ];
+    const windowsPlatforms: string[] = ["Win32", "Win64", "Windows", "WinCE"];
+    const iosPlatforms: string[] = ["iPhone", "iPad", "iPod"];
+    let os: OS = null;
 
     if (macosPlatforms.indexOf(platform) !== -1) {
       os = "MacOS";
@@ -50,14 +58,14 @@
     return os;
   };
 
-  let os = getOS();
+  let os: OS = getOS();
   onMount(() => {
-    if (os !== "Android" || os !== "iOS") loadImages();
+    if (os !== "Android" && os !== "iOS") loadImages();
   });
 </script>
 
 <main
-  style="background-color: {$theme === THEMES.DARK
+  style="background-color: {$theme === 'dark'
     ? THEME_COLORS.DARK_1
     : THEME_COLORS.LIGHT_1};"
 >
