@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import TypeProgress from "./pages/TypeProgress.svelte";
   import Result from "./pages/Result.svelte";
   import { STAGES } from "./stores/utils/constants";
