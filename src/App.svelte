@@ -1,7 +1,6 @@
 <script lang="ts">
   import TypeProgress from "./pages/TypeProgress.svelte";
   import Result from "./pages/Result.svelte";
-  import { STAGES } from "./stores/utils/constants";
   import { slide } from "svelte/transition";
   import { loadImages } from "./stores/collections/imageCollection";
   import { onMount } from "svelte";
@@ -10,21 +9,21 @@
   import { THEMES, THEME_COLORS } from "./stores/utils/constants";
   import About from "./pages/About.svelte";
   import Unsupported from "./pages/Unsupported.svelte";
+  import type { Stages } from "../src/types/mainTypes";
 
-  let { START, PROGRESS, END, ABOUT } = STAGES;
-  let currentStage = START;
+  let currentStage: Stages = "start";
 
-  let result_text = "You scored 0 words in 0 seconds";
+  let result_text: string = "You scored 0 words in 0 seconds";
 
-  $: currentStage = $aboutStore ? ABOUT : START;
+  $: currentStage = $aboutStore ? "about" : "start";
 
   const updateStage = (event) => {
     if (event.detail.position) {
-      if (currentStage === PROGRESS) currentStage = START;
+      if (currentStage === "progress") currentStage = "start";
     } else {
-      if (currentStage === START) currentStage = PROGRESS;
-      else if (currentStage === PROGRESS) currentStage = END;
-      else if (currentStage === END) currentStage = START;
+      if (currentStage === "start") currentStage = "progress";
+      else if (currentStage === "progress") currentStage = "end";
+      else if (currentStage === "end") currentStage = "start";
     }
     if (event.detail.result) result_text = event.detail.result;
   };
@@ -64,15 +63,15 @@
 >
   {#if os === "Android" || os === "iOS"}
     <Unsupported {os} />
-  {:else if currentStage === PROGRESS}
+  {:else if currentStage === "progress"}
     <div transition:slide={{ duration: 200 }}>
       <TypeProgress on:updateStage={updateStage} />
     </div>
-  {:else if currentStage === END}
+  {:else if currentStage === "end"}
     <div transition:slide={{ duration: 200 }}>
       <Result {result_text} on:updateStage={updateStage} />
     </div>
-  {:else if currentStage === ABOUT}
+  {:else if currentStage === "about"}
     <div transition:slide={{ duration: 200 }}>
       <About />
     </div>
