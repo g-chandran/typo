@@ -17,10 +17,11 @@
 
   $: currentStage = $aboutStore ? "about" : "start";
 
-  const updateStage = (
+  /* 
+  To update the current Page of the application to Homepage, TypeProgress, Result, About
+  */
+  const updateStage = (event: CustomEvent<UpdateStage>): void => {
     // TODO: The Optional should be changed after the updateStage CustomEvent is updated everywhere
-    event: CustomEvent<UpdateStage>
-  ): void => {
     if (event.detail.position) {
       if (currentStage === "progress") currentStage = "start";
     } else {
@@ -31,6 +32,9 @@
     if (event.detail.result) result_text = event.detail.result;
   };
 
+  /* 
+  Function to return the User's Operating System as a string
+  */
   const getOS = (): OS => {
     const userAgent: string = window.navigator.userAgent;
     const platform: string = window.navigator.platform;
