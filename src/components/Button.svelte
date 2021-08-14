@@ -13,8 +13,8 @@
   $: foregroundColor =
     backgroundColor === Colors.orangeColor
       ? $theme === "dark"
-        ? Colors.white
-        : Colors.black
+        ? Colors.black
+        : Colors.white
       : Colors.orangeColor;
 
   let dispatch = createEventDispatcher();

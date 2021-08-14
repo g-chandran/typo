@@ -44,7 +44,7 @@ export const setPlaymode = (playmode: Playmodes): boolean => {
 
 export const getPlaymode = (): Playmodes => properties.playmode;
 
-export const setWordsLenght = (length: Units): boolean => {
+export const setWordsLength = (length: Units): boolean => {
   properties.words_length = length;
   return true;
 };

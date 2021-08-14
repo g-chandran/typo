@@ -1,52 +1,52 @@
-<script>
-  import {
-    THEME_COMMANDS,
-    SETTINGS_COMMANDS,
-    PLAYMODE_COMMANDS,
-    MISC_COMMANDS,
-    COMMAND_FILTERS,
-  } from "../stores/utils/commands.js";
-
+<script lang="ts">
   import { theme } from "../stores/masterStore";
-  import { COLORS, THEMES, THEME_COLORS } from "../stores/utils/constants.js";
-
-  let { DARK_2, LIGHT_2 } = THEME_COLORS;
-
   import { createEventDispatcher } from "svelte";
+  import { Colors, ThemeColors } from "../types/masterEnums";
+  import {
+    CommandFilters,
+    MiscCommands,
+    PlaymodeCommands,
+    SettingCommands,
+    ThemeCommands,
+  } from "../stores/utils/commands";
+  import type { CommandInterface } from "../stores/utils/commands";
 
-  const { SETTINGS_FILTER, PLAYMODE_FILTER, THEME_FILTER } = COMMAND_FILTERS;
-  const focusInput = (node) => node.focus();
-
+  const focusInput = (node: HTMLInputElement) => node.focus();
   const dispatch = createEventDispatcher();
 
-  let currentIndex = 0;
-  let suggestions = [];
-  let filters = [
-    THEME_COMMANDS,
-    PLAYMODE_COMMANDS,
-    SETTINGS_COMMANDS,
-    MISC_COMMANDS,
+  let currentIndex: number = 0;
+  let suggestions: CommandInterface[] = [];
+  let filters: CommandInterface[][] = [
+    ThemeCommands,
+    PlaymodeCommands,
+    SettingCommands,
+    MiscCommands,
   ];
-  let command = "";
+  let command: string = "";
 
   /* 
     Reactive block for updating field filters
   */
   $: {
-    if (command[0] === THEME_FILTER) filters = [THEME_COMMANDS];
-    else if (command[0] === PLAYMODE_FILTER) filters = [PLAYMODE_COMMANDS];
-    else if (command[0] === SETTINGS_FILTER) filters = [SETTINGS_COMMANDS];
+    if (command[0] === CommandFilters.themeFilter) filters = [ThemeCommands];
+    else if (command[0] === CommandFilters.playmodeFilter)
+      filters = [PlaymodeCommands];
+    else if (command[0] === CommandFilters.settingsFilter)
+      filters = [SettingCommands];
     else
       filters = [
-        THEME_COMMANDS,
-        PLAYMODE_COMMANDS,
-        SETTINGS_COMMANDS,
-        MISC_COMMANDS,
+        ThemeCommands,
+        PlaymodeCommands,
+        SettingCommands,
+        MiscCommands,
       ];
     updateSuggestions();
   }
 
-  const updateSuggestions = () => {
+  /* 
+  Updates the Suggestions Array based on filters
+  */
+  const updateSuggestions = (): void => {
     suggestions = [];
     currentIndex = 0;
     if (command.length > 0)
@@ -56,37 +56,19 @@
   };
 
   /* 
-    Checks whether command is a substring of any filter
-    Uses regex for validation
+  Checks whether command is a substring of any filter
   */
-  const inputFilter = (value) => {
-    if (
-      command.length === 1 &&
-      ![">", "@", "#"].includes(command) &&
-      !/[a-z0-9]/i.test(command)
-    )
-      return false;
-    let regex;
-    if (filters.length > 1) regex = new RegExp(command, "i");
-    else regex = new RegExp(command.slice(1, command.length), "i");
-    return regex.test(value.name);
-  };
-
-  /* 
-    Checks whether command is a substring of any filter
-    Uses includes() method to perform the comparison
-  */
-  const inputValidator = (value) => {
-    let comparison =
+  const inputValidator = (value: CommandInterface): boolean => {
+    let comparison: string =
       filters.length > 1 ? command : command.slice(1, command.length);
     return value.name.toLowerCase().includes(comparison.toLowerCase());
   };
 
   /* 
-    Handler for all the key events occuring in the Component
+  Handler for all the key events occurring in the Component
   */
-  const handleKeyPress = (event) => {
-    const key = event.key;
+  const handleKeyPress = (event: KeyboardEvent): void => {
+    const key: string = event.key;
     if (key === "Enter") {
       if (suggestions[currentIndex]) suggestions[currentIndex].callee();
       dispatch("suggestionHandled");
@@ -102,18 +84,20 @@
   /* 
   on:Click event for suggestions
   */
-  const handleClick = (index) => {
+  const handleClick = (index: number): void => {
     currentIndex = index;
     suggestions[currentIndex].callee();
     dispatch("suggestionHandled");
   };
 
-  let backgroundColor;
-  let foregroundColor;
+  let backgroundColor: ThemeColors;
+  let foregroundColor: ThemeColors;
 
   $: {
-    backgroundColor = $theme === THEMES.DARK ? DARK_2 : LIGHT_2;
-    foregroundColor = $theme === THEMES.DARK ? LIGHT_2 : DARK_2;
+    backgroundColor =
+      $theme === "dark" ? ThemeColors.dark2 : ThemeColors.light2;
+    foregroundColor =
+      $theme === "dark" ? ThemeColors.light2 : ThemeColors.dark2;
   }
 </script>
 
@@ -136,7 +120,7 @@
       <p
         class:selected={currentIndex === index}
         on:click={() => handleClick(index)}
-        style="color: {$theme === THEMES.DARK ? COLORS.WHITE : COLORS.DARK};"
+        style="color: {$theme === 'dark' ? Colors.white : Colors.black};"
       >
         {suggestion.name}
       </p>
