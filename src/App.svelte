@@ -6,14 +6,14 @@
   import { onMount } from "svelte";
   import Homepage from "./pages/Homepage.svelte";
   import { theme, aboutStore } from "./stores/masterStore";
-  import { THEME_COLORS, DEFAULT_RESULT_TEXT } from "./stores/utils/constants";
   import About from "./pages/About.svelte";
   import Unsupported from "./pages/Unsupported.svelte";
   import type { Stages, OS, UpdateStage } from "../src/types/mainTypes";
+  import { Constants, ThemeColors } from "./types/masterEnums";
 
   let currentStage: Stages = "start";
 
-  let result_text: string = DEFAULT_RESULT_TEXT;
+  let result_text: string = Constants.defaultResultText;
 
   $: currentStage = $aboutStore ? "about" : "start";
 
@@ -31,7 +31,7 @@
     }
     if (event.detail.result && event.detail.result !== "")
       result_text = event.detail.result;
-    else result_text = DEFAULT_RESULT_TEXT;
+    else result_text = Constants.defaultResultText;
   };
 
   /* 
@@ -72,8 +72,8 @@
 
 <main
   style="background-color: {$theme === 'dark'
-    ? THEME_COLORS.DARK_1
-    : THEME_COLORS.LIGHT_1};"
+    ? ThemeColors.dark1
+    : ThemeColors.light1};"
 >
   {#if os === "Android" || os === "iOS"}
     <Unsupported {os} />

@@ -1,12 +1,10 @@
 <script lang="ts">
   import WordTile from "../components/WordTile.svelte";
   import Button from "../components/Button.svelte";
-  import { ABOUT_INFO } from "../stores/utils/constants";
   import { aboutStore, theme } from "../stores/masterStore";
-  import { Colors, ThemeColors } from "../types/masterEnums";
-  const { CONTENT, TITLE } = ABOUT_INFO;
+  import { Colors, Constants, ThemeColors } from "../types/masterEnums";
 
-  const wordList: string[] = CONTENT.toLowerCase().split(":");
+  const wordList: string[] = Constants.content.toLowerCase().split(":");
 
   let lastWord: boolean = false;
   const WORDS_COLOR: string = $theme === "light" ? Colors.black : Colors.gray;
@@ -23,7 +21,7 @@
 </script>
 
 <div class="container">
-  <p style="color: {WORDS_COLOR};">{TITLE}</p>
+  <p style="color: {WORDS_COLOR};">{Constants.title}</p>
   <WordTile word={wordList[index]} on:moveNext={updateWord} {lastWord} />
   <section class="actions">
     <Button
