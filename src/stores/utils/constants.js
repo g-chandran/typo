@@ -44,3 +44,5 @@ export const ABOUT_INFO = Object.freeze({
     "Typo.:A Fast,:Powerful,:Playful app:to improve your typing skills.:" +
     "Playmodes,:Settings,:Themes:to make it more fun.:Now type it,:Typo it,:repeat it.:It keeps Evolving.",
 });
+
+export const DEFAULT_RESULT_TEXT = "You scored 0 words in 0 seconds";

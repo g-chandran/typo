@@ -6,14 +6,14 @@
   import { onMount } from "svelte";
   import Homepage from "./pages/Homepage.svelte";
   import { theme, aboutStore } from "./stores/masterStore";
-  import { THEME_COLORS } from "./stores/utils/constants";
+  import { THEME_COLORS, DEFAULT_RESULT_TEXT } from "./stores/utils/constants";
   import About from "./pages/About.svelte";
   import Unsupported from "./pages/Unsupported.svelte";
   import type { Stages, Themes, OS, UpdateStage } from "../src/types/mainTypes";
 
   let currentStage: Stages = "start";
 
-  let result_text: string = "You scored 0 words in 0 seconds";
+  let result_text: string = DEFAULT_RESULT_TEXT;
 
   $: currentStage = $aboutStore ? "about" : "start";
 
@@ -29,7 +29,9 @@
       else if (currentStage === "progress") currentStage = "end";
       else if (currentStage === "end") currentStage = "start";
     }
-    if (event.detail.result) result_text = event.detail.result;
+    if (event.detail.result && event.detail.result !== "")
+      result_text = event.detail.result;
+    else result_text = DEFAULT_RESULT_TEXT;
   };
 
   /* 
