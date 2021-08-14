@@ -1,41 +1,54 @@
-<script>
+<script lang="ts">
   import TypeProgress from "./pages/TypeProgress.svelte";
   import Result from "./pages/Result.svelte";
-  import { STAGES } from "./stores/utils/constants";
   import { slide } from "svelte/transition";
   import { loadImages } from "./stores/collections/imageCollection";
   import { onMount } from "svelte";
   import Homepage from "./pages/Homepage.svelte";
   import { theme, aboutStore } from "./stores/masterStore";
-  import { THEMES, THEME_COLORS } from "./stores/utils/constants";
   import About from "./pages/About.svelte";
   import Unsupported from "./pages/Unsupported.svelte";
+  import type { Stages, OS, UpdateStage } from "../src/types/mainTypes";
+  import { Constants, ThemeColors } from "./types/masterEnums";
 
-  let { START, PROGRESS, END, ABOUT } = STAGES;
-  let currentStage = START;
+  let currentStage: Stages = "start";
 
-  let result_text = "You scored 0 words in 0 seconds";
+  let result_text: string = Constants.defaultResultText;
 
-  $: currentStage = $aboutStore ? ABOUT : START;
+  $: currentStage = $aboutStore ? "about" : "start";
 
-  const updateStage = (event) => {
+  /* 
+  To update the current Page of the application to Homepage, TypeProgress, Result, About
+  */
+  const updateStage = (event: CustomEvent<UpdateStage>): void => {
+    // TODO: The Optional should be changed after the updateStage CustomEvent is updated everywhere
     if (event.detail.position) {
-      if (currentStage === PROGRESS) currentStage = START;
+      if (currentStage === "progress") currentStage = "start";
     } else {
-      if (currentStage === START) currentStage = PROGRESS;
-      else if (currentStage === PROGRESS) currentStage = END;
-      else if (currentStage === END) currentStage = START;
+      if (currentStage === "start") currentStage = "progress";
+      else if (currentStage === "progress") currentStage = "end";
+      else if (currentStage === "end") currentStage = "start";
     }
-    if (event.detail.result) result_text = event.detail.result;
+    if (event.detail.result && event.detail.result !== "")
+      result_text = event.detail.result;
+    else result_text = Constants.defaultResultText;
   };
 
-  const getOS = () => {
-    const userAgent = window.navigator.userAgent;
-    const platform = window.navigator.platform;
-    const macosPlatforms = ["Macintosh", "MacIntel", "MacPPC", "Mac68K"];
-    const windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"];
-    const iosPlatforms = ["iPhone", "iPad", "iPod"];
-    let os = null;
+  /* 
+  Function to return the User's Operating System as a string
+  */
+  const getOS = (): OS => {
+    const userAgent: string = window.navigator.userAgent;
+    const platform: string = window.navigator.platform;
+    const macosPlatforms: string[] = [
+      "Macintosh",
+      "MacIntel",
+      "MacPPC",
+      "Mac68K",
+    ];
+    const windowsPlatforms: string[] = ["Win32", "Win64", "Windows", "WinCE"];
+    const iosPlatforms: string[] = ["iPhone", "iPad", "iPod"];
+    let os: OS = null;
 
     if (macosPlatforms.indexOf(platform) !== -1) {
       os = "MacOS";
@@ -51,28 +64,28 @@
     return os;
   };
 
-  let os = getOS();
+  let os: OS = getOS();
   onMount(() => {
-    if (os !== "Android" || os !== "iOS") loadImages();
+    if (os !== "Android" && os !== "iOS") loadImages();
   });
 </script>
 
 <main
-  style="background-color: {$theme === THEMES.DARK
-    ? THEME_COLORS.DARK_1
-    : THEME_COLORS.LIGHT_1};"
+  style="background-color: {$theme === 'dark'
+    ? ThemeColors.dark1
+    : ThemeColors.light1};"
 >
   {#if os === "Android" || os === "iOS"}
     <Unsupported {os} />
-  {:else if currentStage === PROGRESS}
+  {:else if currentStage === "progress"}
     <div transition:slide={{ duration: 200 }}>
       <TypeProgress on:updateStage={updateStage} />
     </div>
-  {:else if currentStage === END}
+  {:else if currentStage === "end"}
     <div transition:slide={{ duration: 200 }}>
       <Result {result_text} on:updateStage={updateStage} />
     </div>
-  {:else if currentStage === ABOUT}
+  {:else if currentStage === "about"}
     <div transition:slide={{ duration: 200 }}>
       <About />
     </div>

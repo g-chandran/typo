@@ -1,26 +1,29 @@
-<script>
+<script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { THEMES, COLORS } from "../stores/utils/constants.js";
   import { theme } from "../stores/masterStore";
-  const { ORANGE_COLOR, WHITE, BLACK } = COLORS;
+  import { Colors } from "../types/masterEnums";
 
-  export let title = "";
-  export let name = "";
-  export let onClickEventName = "customClick";
-  export let onClickEventProps = {};
-  export let backgroundColor = ORANGE_COLOR;
-  export let bold = false;
+  type nameType = string | number;
+  export let title: string = "";
+  export let name: nameType = "";
+  export let onClickEventName: string = "customClick";
+  export let onClickEventProps: object = {};
+  export let backgroundColor: string = Colors.orangeColor;
+  export let bold: boolean = false;
 
   $: foregroundColor =
-    backgroundColor === ORANGE_COLOR
-      ? $theme === THEMES.LIGHT
-        ? WHITE
-        : BLACK
-      : ORANGE_COLOR;
+    backgroundColor === Colors.orangeColor
+      ? $theme === "dark"
+        ? Colors.black
+        : Colors.white
+      : Colors.orangeColor;
 
   let dispatch = createEventDispatcher();
 
-  const clickEvent = () => {
+  /* 
+  To dispatch the onClickEvent of the button
+  */
+  const clickEvent = (): void => {
     document.querySelector("button").blur();
     dispatch(onClickEventName, onClickEventProps);
   };
@@ -29,9 +32,9 @@
 <button
   on:click={clickEvent}
   {title}
-  style="color: {foregroundColor}; background-color: {backgroundColor}; font-weight: {bold
-    ? 'bold'
-    : ''};"
+  style="color: {foregroundColor}; 
+  background-color: {backgroundColor}; 
+  font-weight: {bold ? 'bold' : ''};"
 >
   {name}
 </button>

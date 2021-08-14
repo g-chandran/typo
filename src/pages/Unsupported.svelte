@@ -1,5 +1,7 @@
-<script>
-  export let os;
+<script lang="ts">
+  import type { OS } from "../types/mainTypes";
+
+  export let os: OS;
 </script>
 
 <div class="container">

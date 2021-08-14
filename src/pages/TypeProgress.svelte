@@ -1,12 +1,16 @@
-<script>
+<script lang="ts">
+  import type { SvelteComponent } from "svelte";
+
   import { playmode } from "../stores/masterStore";
-  import { PLAYMODES } from "../stores/utils/constants";
+  import type { Playmodes } from "../types/mainTypes";
   import ClassicPlaymode from "./playmodes/ClassicPlaymode.svelte";
   import ReverseClassicPlaymode from "./playmodes/ReverseClassicPlaymode.svelte";
 
-  const playmodes = {
-    [PLAYMODES.CLASSIC]: ClassicPlaymode,
-    [PLAYMODES.REVERSE_CLASSIC]: ReverseClassicPlaymode,
+  type AllPlaymodes = Record<Playmodes, typeof SvelteComponent>;
+
+  const playmodes: AllPlaymodes = {
+    classic: ClassicPlaymode,
+    reverse_classic: ReverseClassicPlaymode,
   };
 </script>
 

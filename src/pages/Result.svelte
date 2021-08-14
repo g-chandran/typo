@@ -1,18 +1,21 @@
-<script>
+<script lang="ts">
   import Button from "../components/Button.svelte";
   import { quintInOut } from "svelte/easing";
-  import { COLORS, THEMES, THEME_COLORS } from "../stores/utils/constants";
   import { theme } from "../stores/masterStore";
+  import { Colors, ThemeColors } from "../types/masterEnums";
 
-  export let result_text = "";
+  export let result_text: string = "";
 
-  let svgSource = Math.floor(Math.random() * 5);
-  let image = false;
+  let svgSource: number = Math.floor(Math.random() * 5);
+  let image: boolean = false;
 
-  const loadSVG = (node, { duration = 200 }) => {
+  const loadSVG = (
+    _node: HTMLImageElement,
+    { duration = 200 }: { duration: number }
+  ) => {
     return {
       duration,
-      css: (t) => {
+      css: (t: number) => {
         const ease = quintInOut(t);
         return `
           transform: scale(${ease}) rotate(${ease * 1080}deg);
@@ -32,15 +35,13 @@
     src={`./assets/svgs/svg${svgSource}.svg`}
     alt="Sorry"
   />
-  <p style="color: {$theme === THEMES.DARK ? COLORS.WHITE : COLORS.BLACK};">
+  <p style="color: {$theme === 'dark' ? Colors.white : Colors.black};">
     {result_text}
   </p>
   <Button
     title="Start again"
     name="Typo"
-    backgroundColor={$theme === THEMES.DARK
-      ? THEME_COLORS.DARK_3
-      : THEME_COLORS.LIGHT_3}
+    backgroundColor={$theme === "dark" ? ThemeColors.dark3 : ThemeColors.light3}
     onClickEventName="updateStage"
     onClickEventProps={{ result: "You scored 0 words in 0 seconds" }}
     on:updateStage
