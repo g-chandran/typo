@@ -1,18 +1,19 @@
-<script>
+<script lang="ts">
   import Button from "../../components/Button.svelte";
   import Carousel from "../../components/Carousel.svelte";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
-  import { THEMES, THEME_COLORS } from "../../stores/utils/constants";
   import { score, theme, timer } from "../../stores/masterStore";
   import { getWordsLength } from "../../stores/utils/properties";
+  import { ThemeColors } from "../../types/masterEnums";
+  import type { Units } from "../../types/mainTypes";
 
   const dispatch = createEventDispatcher();
-  const WORDS_LENGTH = getWordsLength();
-  const MAX_DURATION = 999;
+  const WORDS_LENGTH: Units = getWordsLength();
+  const MAX_DURATION: number = 999;
 
-  let interval;
+  let interval: NodeJS.Timeout;
 
-  const countup = () => {
+  const countUp = () => {
     interval = setInterval(() => {
       if ($timer >= MAX_DURATION) {
         clearInterval(interval);
@@ -20,7 +21,7 @@
     }, 1000);
   };
 
-  const updateScore = () => score.update((e) => (e -= 1));
+  const updateScore = (): void => score.update((e) => (e -= 1));
 
   $: if ($score <= 0 || $timer >= MAX_DURATION)
     dispatch("updateStage", {
@@ -34,7 +35,7 @@
   onMount(() => {
     score.set(WORDS_LENGTH);
     timer.set(0);
-    countup();
+    countUp();
   });
 
   onDestroy(() => clearInterval(interval));
@@ -45,9 +46,9 @@
   <div>
     <Button
       bind:name={$score}
-      backgroundColor={$theme === THEMES.DARK
-        ? THEME_COLORS.DARK_3
-        : THEME_COLORS.LIGHT_3}
+      backgroundColor={$theme === "dark"
+        ? ThemeColors.dark3
+        : ThemeColors.light3}
       onClickEventName="updateStage"
       onClickEventProps={{ position: true }}
       bold={true}

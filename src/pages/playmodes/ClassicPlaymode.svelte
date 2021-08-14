@@ -1,21 +1,22 @@
-<script>
+<script lang="ts">
   import Button from "../../components/Button.svelte";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import Carousel from "../../components/Carousel.svelte";
-  import { getTimerDuration } from "../../stores/utils/properties.js";
-  import { THEMES, THEME_COLORS } from "../../stores/utils/constants";
+  import { getTimerDuration } from "../../stores/utils/properties";
   import { theme, timer, score } from "../../stores/masterStore";
+  import type { Units } from "../../types/mainTypes";
+  import { ThemeColors } from "../../types/masterEnums";
 
-  const updateScore = () => {
+  const updateScore = (): void => {
     score.update((e) => (e += 1));
   };
 
   const dispatch = createEventDispatcher();
-  const TIMER_DURATION = getTimerDuration();
+  const TIMER_DURATION: Units = getTimerDuration();
 
-  let interval;
+  let interval: NodeJS.Timeout;
 
-  const countdown = () => {
+  const countdown = (): void => {
     interval = setInterval(() => {
       if ($timer <= 0) {
         clearInterval(interval);
@@ -46,9 +47,9 @@
   <div>
     <Button
       bind:name={$score}
-      backgroundColor={$theme === THEMES.DARK
-        ? THEME_COLORS.DARK_3
-        : THEME_COLORS.LIGHT_3}
+      backgroundColor={$theme === "dark"
+        ? ThemeColors.dark3
+        : ThemeColors.light3}
       onClickEventName="updateStage"
       onClickEventProps={{ position: true }}
       bold={true}

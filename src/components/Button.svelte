@@ -3,8 +3,9 @@
   import { theme } from "../stores/masterStore";
   import { Colors } from "../types/masterEnums";
 
+  type nameType = string | number;
   export let title: string = "";
-  export let name: string = "";
+  export let name: nameType = "";
   export let onClickEventName: string = "customClick";
   export let onClickEventProps: object = {};
   export let backgroundColor: string = Colors.orangeColor;
