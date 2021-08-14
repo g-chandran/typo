@@ -9,7 +9,7 @@
   import { THEME_COLORS, DEFAULT_RESULT_TEXT } from "./stores/utils/constants";
   import About from "./pages/About.svelte";
   import Unsupported from "./pages/Unsupported.svelte";
-  import type { Stages, Themes, OS, UpdateStage } from "../src/types/mainTypes";
+  import type { Stages, OS, UpdateStage } from "../src/types/mainTypes";
 
   let currentStage: Stages = "start";
 

@@ -25,3 +25,13 @@ position: to set forward or backward
 result: result text to be displayed on the result page
 */
 export type UpdateStage = { position: boolean; result: string };
+
+/* 
+Type for choosing between the Playmodes
+*/
+export type Playmodes = "classic" | "reverse_classic";
+
+/* 
+Units used for updating the Settings
+*/
+export type Units = 0 | 30 | 60 | 90;
