@@ -35,3 +35,8 @@ export type Playmodes = "classic" | "reverse_classic";
 Units used for updating the Settings
 */
 export type Units = 0 | 30 | 60 | 90;
+
+/* 
+Statuses of Letters in words
+*/
+export type Status = "unwritten" | "correct" | "incorrect";

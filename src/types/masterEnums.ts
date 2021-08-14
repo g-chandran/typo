@@ -13,3 +13,12 @@ export enum Colors {
   white = "#fff",
   gray = "#808080",
 }
+
+export enum Constants {
+  wordSetThreshold = 50,
+  timerDuration = 60,
+  defaultResultText = "You scored 0 words in 0 seconds",
+  title = "You're here. Woo-hoo! Start typing to know about Typo.",
+  content = "Typo.:A Fast,:Powerful,:Playful app:to improve your typing skills.:" +
+    "Playmodes,:Settings,:Themes:to make it more fun.:Now type it,:Typo it,:repeat it.:It keeps Evolving.",
+}

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
   import { createEventDispatcher } from "svelte";
   import WordTile from "./WordTile.svelte";
@@ -8,35 +8,32 @@
     FIVE_LETTER_WORDS,
     SEVEN_LETTER_WORDS,
   } from "../stores/collections/wordCollection";
-  import {
-    COLORS,
-    THEMES,
-    WORD_SET_THRESHOLD,
-  } from "../stores/utils/constants.js";
   import { theme } from "../stores/masterStore";
+  import { Colors, Constants } from "../types/masterEnums";
 
   const dispatch = createEventDispatcher();
 
-  const CAPACITY =
+  const CAPACITY: number =
     THREE_LETTER_WORDS.length +
     FIVE_LETTER_WORDS.length +
     SEVEN_LETTER_WORDS.length;
 
-  let wordSet = new Set();
-  let wordList = new Array();
+  let wordSet: Set<string> = new Set();
+  let wordList: string[] = new Array();
   const STORES = {
     0: THREE_LETTER_WORDS,
     1: FIVE_LETTER_WORDS,
     2: SEVEN_LETTER_WORDS,
   };
 
-  let maxValues = WORD_SET_THRESHOLD;
-  let index = 0;
-  const WORDS_COLOR = $theme === THEMES.LIGHT ? COLORS.BLACK : COLORS.GRAY;
+  const WORD_SET_THRESHOLD: number = Constants.wordSetThreshold;
+  let maxValues: number = WORD_SET_THRESHOLD;
+  let index: number = 0;
+  const WORDS_COLOR: Colors = $theme === "dark" ? Colors.gray : Colors.black;
 
   onMount(() => updatePipeline());
 
-  const update = async () => {
+  const update = async (): Promise<void> => {
     if (index > wordSet.size - WORD_SET_THRESHOLD) {
       maxValues += WORD_SET_THRESHOLD;
       updatePipeline();
@@ -45,11 +42,11 @@
     dispatch("updateScore");
   };
 
-  const updatePipeline = () => {
+  const updatePipeline = (): void => {
     while (wordSet.size < maxValues && wordSet.size < CAPACITY) {
-      const randomStore =
+      const randomStore: string[] =
         STORES[Math.floor(Math.random() * Object.keys(STORES).length)];
-      const randomValue =
+      const randomValue: string =
         randomStore[Math.floor(Math.random() * randomStore.length)];
       wordSet.add(randomValue);
     }

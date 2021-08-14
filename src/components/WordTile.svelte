@@ -1,52 +1,64 @@
-<script>
-  import { COLORS, STATUS, THEMES } from "../stores/utils/constants.js";
+<script lang="ts">
   import { createEventDispatcher } from "svelte";
   import { theme } from "../stores/masterStore";
+  import type { Status } from "../types/mainTypes";
+  import { Colors } from "../types/masterEnums";
 
-  export let word = "typo";
-  export let lastWord = false;
+  export let word: string = "typo";
+  export let lastWord: boolean = false;
 
-  const { UNWRITTEN, CORRECT, INCORRECT } = STATUS;
   const dispatch = createEventDispatcher();
 
-  let index;
-  let wordObject;
+  interface wordObjectInterface {
+    letter: string;
+    status: Status;
+    letter_color: Colors;
+    background_color?: Colors | "";
+  }
 
-  const iterateValidation = () => {
+  let index: number;
+  let wordObject: wordObjectInterface[];
+
+  const iterateValidation = (): boolean => {
     for (const obj of wordObject) {
-      if (obj.status !== CORRECT) return false;
+      if (obj.status !== "correct") return false;
     }
     return true;
   };
 
-  const updateStatus = (index, status, bgColor = "") => {
+  const updateStatus = (
+    index: number,
+    status: Status,
+    bgColor: Colors | "" = ""
+  ): void => {
     wordObject[index].status = status;
     wordObject[index].background_color = bgColor;
-    if (status == UNWRITTEN)
+    if (status == "unwritten")
       wordObject[index].letter_color =
-        $theme == THEMES.DARK ? COLORS.BLACK : COLORS.GRAY;
-    else if (status == CORRECT)
+        $theme == "dark" ? Colors.black : Colors.gray;
+    else if (status === "correct")
       wordObject[index].letter_color =
-        $theme == THEMES.DARK ? COLORS.GRAY : COLORS.BLACK;
-    else if (status == INCORRECT)
-      wordObject[index].letter_color = COLORS.ORANGE_COLOR;
+        $theme == "dark" ? Colors.gray : Colors.black;
+    else if (status === "incorrect")
+      wordObject[index].letter_color = Colors.orangeColor;
   };
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress = (event: KeyboardEvent): void => {
     if (lastWord) return;
-    let key = event.key;
-    const BACKSPACE_VALIDATION = key === "Backspace" && index > 0;
-    const KEY_VALIDATION = key.length === 1 && index < wordObject.length;
+    let key: string = event.key;
+    const BACKSPACE_VALIDATION: boolean = key === "Backspace" && index > 0;
+    const KEY_VALIDATION: boolean =
+      key.length === 1 && index < wordObject.length;
 
     if (BACKSPACE_VALIDATION) {
       index -= 1;
-      updateStatus(index, UNWRITTEN);
+      updateStatus(index, "unwritten");
     } else if (KEY_VALIDATION && key.match(/./)) {
-      if (wordObject[index].letter === key) updateStatus(index, CORRECT);
+      if (wordObject[index].letter === key) updateStatus(index, "correct");
       else {
         if (wordObject[index].letter === " " && key !== " ")
-          updateStatus(index, INCORRECT, COLORS.ORANGE_COLOR);
-        else updateStatus(index, INCORRECT);
+          updateStatus(index, "incorrect", Colors.orangeColor);
+        else updateStatus(index, "incorrect");
       }
       index += 1;
     }
@@ -57,9 +69,9 @@
     wordObject = new Array(word.length);
     for (let i = 0; i < word.length; i++)
       wordObject[i] = {
-        status: UNWRITTEN,
+        status: "unwritten",
         letter: word[i],
-        letter_color: $theme == THEMES.DARK ? COLORS.BLACK : COLORS.GRAY,
+        letter_color: $theme == "dark" ? Colors.black : Colors.gray,
       };
     index = 0;
   }
