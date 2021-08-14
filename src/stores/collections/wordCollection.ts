@@ -1,4 +1,4 @@
-export const THREE_LETTER_WORDS = [
+export const THREE_LETTER_WORDS: string[] = [
   "jar",
   "now",
   "cub",
@@ -101,7 +101,7 @@ export const THREE_LETTER_WORDS = [
   "gam",
 ];
 
-export const FIVE_LETTER_WORDS = [
+export const FIVE_LETTER_WORDS: string[] = [
   "peats",
   "mucid",
   "forme",
@@ -204,7 +204,7 @@ export const FIVE_LETTER_WORDS = [
   "quits",
 ];
 
-export const SEVEN_LETTER_WORDS = [
+export const SEVEN_LETTER_WORDS: string[] = [
   "mispart",
   "skulked",
   "diobols",
