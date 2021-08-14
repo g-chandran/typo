@@ -12,11 +12,17 @@
 
   let isCommandPaletteActive: boolean = false;
 
+  /* 
+  Toggles the state of the Command Palette by default, also uses an optional argument to update it
+  */
   const updateCommandPalette = (updateTo: boolean = null): void => {
     isCommandPaletteActive =
       updateTo === null ? !isCommandPaletteActive : updateTo;
   };
 
+  /* 
+  Handles the KeyEvents of the Component.
+  */
   const handleKeys = (event: KeyboardEvent): void => {
     const toggleCommandPalette: boolean =
       ((os === "MacOS" && event.altKey) ||
