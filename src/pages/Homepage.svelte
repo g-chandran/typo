@@ -1,25 +1,24 @@
-<script>
+<script lang="ts">
   import Button from "../components/Button.svelte";
   import CommandPalette from "../components/CommandPalette.svelte";
   import { fly } from "svelte/transition";
   import { theme } from "../stores/masterStore";
-  import { COLORS, THEMES } from "../stores/utils/constants";
+  import type { OS } from "../types/mainTypes";
+  import { Colors } from "../types/masterEnums";
 
-  export let os;
+  export let os: OS;
 
-  const modifierKey = os === "MacOS" ? "Option" : "Ctrl";
+  const modifierKey: string = os === "MacOS" ? "Option" : "Ctrl";
 
-  let isCommandPaletteActive = false;
+  let isCommandPaletteActive: boolean = false;
 
-  const updateCommandPalette = (updateTo = null) => {
-    if (updateTo === null) isCommandPaletteActive = !isCommandPaletteActive;
-    else if (typeof updateTo === typeof true) {
-      isCommandPaletteActive = updateTo;
-    }
+  const updateCommandPalette = (updateTo: boolean = null): void => {
+    isCommandPaletteActive =
+      updateTo === null ? !isCommandPaletteActive : updateTo;
   };
 
-  const handleKeys = (event) => {
-    const toggleCommandPalette =
+  const handleKeys = (event: KeyboardEvent): void => {
+    const toggleCommandPalette: boolean =
       ((os === "MacOS" && event.altKey) ||
         (os === "Windows" && event.ctrlKey)) &&
       event.code === "Space";
@@ -48,9 +47,7 @@
     onClickEventName="updateStage"
     title="Start Typing"
   />
-  <section
-    style="color: {$theme === THEMES.DARK ? COLORS.WHITE : COLORS.BLACK};"
-  >
+  <section style="color: {$theme === 'dark' ? Colors.white : Colors.black};">
     <span>{modifierKey}</span>
     +
     <span>Space</span>
