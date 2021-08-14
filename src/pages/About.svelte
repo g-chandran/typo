@@ -1,24 +1,20 @@
-<script>
+<script lang="ts">
   import WordTile from "../components/WordTile.svelte";
   import Button from "../components/Button.svelte";
-  import {
-    ABOUT_INFO,
-    THEMES,
-    THEME_COLORS,
-    COLORS,
-  } from "../stores/utils/constants";
+  import { ABOUT_INFO } from "../stores/utils/constants";
   import { aboutStore, theme } from "../stores/masterStore";
+  import { Colors, ThemeColors } from "../types/masterEnums";
   const { CONTENT, TITLE } = ABOUT_INFO;
 
-  const wordList = CONTENT.toLowerCase().split(":");
+  const wordList: string[] = CONTENT.toLowerCase().split(":");
 
-  let lastWord = false;
-  const WORDS_COLOR = $theme === THEMES.LIGHT ? COLORS.BLACK : COLORS.GRAY;
+  let lastWord: boolean = false;
+  const WORDS_COLOR: string = $theme === "light" ? Colors.black : Colors.gray;
 
   $: index = 0;
 
-  const updateWord = () => {
-    const arrayIndexValidation = index < wordList.length - 1;
+  const updateWord = (): void => {
+    const arrayIndexValidation: boolean = index < wordList.length - 1;
     if (!arrayIndexValidation) lastWord = true;
     if (arrayIndexValidation) {
       index += 1;
@@ -33,9 +29,9 @@
     <Button
       title="View the original source code of the application on Github"
       name="Source"
-      backgroundColor={$theme === THEMES.DARK
-        ? THEME_COLORS.DARK_3
-        : THEME_COLORS.LIGHT_3}
+      backgroundColor={$theme === "dark"
+        ? ThemeColors.dark3
+        : ThemeColors.light3}
       onClickEventName="launchGithub"
       on:launchGithub={() =>
         window.open("https://github.com/g-chandran/typo/", "blank")}
