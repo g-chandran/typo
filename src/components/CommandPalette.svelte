@@ -1,14 +1,13 @@
 <script lang="ts">
   import { theme } from "../stores/masterStore";
   import { createEventDispatcher } from "svelte";
-  import { Colors, ThemeColors } from "../types/masterEnums";
   import {
-    CommandFilters,
-    MiscCommands,
-    PlaymodeCommands,
-    SettingCommands,
-    ThemeCommands,
-  } from "../stores/utils/commands";
+    Colors,
+    NonSettingCommandTypes,
+    SettingCommandTypes,
+    ThemeColors,
+  } from "../types/masterEnums";
+  import { CommandFilters, Commands } from "../stores/utils/commands";
   import type { CommandInterface } from "../stores/utils/commands";
 
   const focusInput = (node: HTMLInputElement) => node.focus();
@@ -16,30 +15,30 @@
 
   let currentIndex: number = 0;
   let suggestions: CommandInterface[] = [];
-  let filters: CommandInterface[][] = [
-    ThemeCommands,
-    PlaymodeCommands,
-    SettingCommands,
-    MiscCommands,
-  ];
+  let filters: CommandInterface[][] = [Commands];
   let command: string = "";
 
   /* 
     Reactive block for updating field filters
   */
   $: {
-    if (command[0] === CommandFilters.themeFilter) filters = [ThemeCommands];
-    else if (command[0] === CommandFilters.playmodeFilter)
-      filters = [PlaymodeCommands];
-    else if (command[0] === CommandFilters.settingsFilter)
-      filters = [SettingCommands];
-    else
+    if (command[0] === CommandFilters.themeFilter)
       filters = [
-        ThemeCommands,
-        PlaymodeCommands,
-        SettingCommands,
-        MiscCommands,
+        Commands.filter((cmd) => cmd.category === NonSettingCommandTypes.theme),
       ];
+    else if (command[0] === CommandFilters.playmodeFilter)
+      filters = [
+        Commands.filter(
+          (cmd) => cmd.category === NonSettingCommandTypes.playmode
+        ),
+      ];
+    else if (command[0] === CommandFilters.settingsFilter)
+      filters = [
+        Commands.filter((cmd) =>
+          (<any>Object).values(SettingCommandTypes).includes(cmd.category)
+        ),
+      ];
+    else filters = [Commands];
     updateSuggestions();
   }
 
@@ -59,9 +58,13 @@
   Checks whether command is a substring of any filter
   */
   const inputValidator = (value: CommandInterface): boolean => {
-    let comparison: string =
-      filters.length > 1 ? command : command.slice(1, command.length);
-    return value.name.toLowerCase().includes(comparison.toLowerCase());
+    let comparison = (<any>Object).values(CommandFilters).includes(command[0])
+      ? command.slice(1)
+      : command.toLowerCase();
+    const isValid: boolean =
+      value.name.toLowerCase().includes(comparison) ||
+      value.category.toLowerCase().includes(comparison);
+    return isValid;
   };
 
   /* 
