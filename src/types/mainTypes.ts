@@ -40,3 +40,10 @@ export type Units = 0 | 30 | 60 | 90;
 Statuses of Letters in words
 */
 export type Status = "unwritten" | "correct" | "incorrect";
+
+export type CommandCategories =
+  | "Theme"
+  | "Playmode"
+  | "Timer"
+  | "Words Length"
+  | "Misc";
