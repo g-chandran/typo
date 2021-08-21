@@ -9,6 +9,7 @@
   } from "../types/masterEnums";
   import { CommandFilters, Commands } from "../stores/utils/commands";
   import type { CommandInterface } from "../stores/utils/commands";
+  import CommandItem from "./CommandItem.svelte";
 
   const focusInput = (node: HTMLInputElement) => node.focus();
   const dispatch = createEventDispatcher();
@@ -120,13 +121,13 @@
   <hr />
   <div class="results">
     {#each suggestions as suggestion, index}
-      <p
-        class:selected={currentIndex === index}
-        on:click={() => handleClick(index)}
-        style="color: {$theme === 'dark' ? Colors.white : Colors.black};"
-      >
-        {suggestion.name}
-      </p>
+      <CommandItem
+        isActive={currentIndex === index}
+        commandName={suggestion.name}
+        commandCategory={suggestion.category}
+        on:handleClick={() => handleClick(index)}
+        textColor={$theme === "dark" ? Colors.white : Colors.black}
+      />
     {:else}
       <em style="color: {foregroundColor};"
         >{command.length > 0
@@ -169,19 +170,6 @@
 
   .results {
     padding: 5px 10px;
-  }
-
-  .results p {
-    padding: 2px 5px;
-    height: 23px;
-    font-size: var(--small-font);
-  }
-
-  .results p:hover {
-    background-color: var(--med-orange);
-  }
-  .selected {
-    background-color: var(--orange);
   }
 
   @media only screen and (max-width: 768px) {
