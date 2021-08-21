@@ -10,7 +10,7 @@ interface Properties {
 let properties: Properties = {
   timer_duration: 60,
   theme: "light",
-  playmode: "classic",
+  playmode: "Classic",
   words_length: 60,
 };
 

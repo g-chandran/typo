@@ -32,12 +32,12 @@ export let Commands: CommandInterface[] = [
   },
   {
     name: "Classic",
-    callee: () => updatePlaymode("classic"),
+    callee: () => updatePlaymode("Classic"),
     category: NonSettingCommandTypes.playmode,
   },
   {
     name: "Reverse Classic",
-    callee: () => updatePlaymode("reverse_classic"),
+    callee: () => updatePlaymode("Reverse Classic"),
     category: NonSettingCommandTypes.playmode,
   },
   {

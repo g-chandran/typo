@@ -29,7 +29,7 @@ export type UpdateStage = { position: boolean; result: string };
 /* 
 Type for choosing between the Playmodes
 */
-export type Playmodes = "classic" | "reverse_classic";
+export type Playmodes = "Classic" | "Reverse Classic";
 
 /* 
 Units used for updating the Settings
