@@ -1,3 +1,7 @@
+import {
+  NonSettingCommandTypes,
+  SettingCommandTypes,
+} from "../../types/masterEnums";
 import { aboutStore } from "../masterStore";
 import {
   updatePlaymode,
@@ -8,48 +12,68 @@ import {
 
 export interface CommandInterface {
   name: string;
+  category: string;
   callee: () => void;
 }
 
 /* 
-Commands for altering the theme can be added here
+All Commands are now grouped together, providing differentiation among them with category property
 */
-export const ThemeCommands: CommandInterface[] = [
-  { name: "Theme: Dark", callee: () => updateTheme("dark") },
-  { name: "Theme: Light", callee: () => updateTheme("light") },
-];
-
-/* 
-Commands for toggling between various playmodes can be added here.
-*/
-export const PlaymodeCommands: CommandInterface[] = [
-  { name: "Playmode: Classic", callee: () => updatePlaymode("classic") },
+export let Commands: CommandInterface[] = [
   {
-    name: "Playmode: Reverse Classic",
-    callee: () => updatePlaymode("reverse_classic"),
+    name: "Dark",
+    callee: () => updateTheme("dark"),
+    category: NonSettingCommandTypes.theme,
   },
-];
-
-/* 
-Commands for settings category can be added here.
-*/
-export const SettingCommands: CommandInterface[] = [
-  { name: "Timer: 30s", callee: () => updateTimer(30) },
-  { name: "Timer: 60s", callee: () => updateTimer(60) },
-  { name: "Timer: 90s", callee: () => updateTimer(90) },
-  { name: "Words Length: 30", callee: () => updateWordsLength(30) },
-  { name: "Words Length: 60", callee: () => updateWordsLength(60) },
-  { name: "Words Length: 90", callee: () => updateWordsLength(90) },
-];
-
-/* 
-Uncategorized Commands can be added here
-NOTE: The commands listed here will not gain any Filters
-*/
-export const MiscCommands: CommandInterface[] = [
+  {
+    name: "Light",
+    callee: () => updateTheme("light"),
+    category: NonSettingCommandTypes.theme,
+  },
+  {
+    name: "Classic",
+    callee: () => updatePlaymode("classic"),
+    category: NonSettingCommandTypes.playmode,
+  },
+  {
+    name: "Reverse Classic",
+    callee: () => updatePlaymode("reverse_classic"),
+    category: NonSettingCommandTypes.playmode,
+  },
+  {
+    name: "30s",
+    callee: () => updateTimer(30),
+    category: SettingCommandTypes.timer,
+  },
+  {
+    name: "60s",
+    callee: () => updateTimer(60),
+    category: SettingCommandTypes.timer,
+  },
+  {
+    name: "90s",
+    callee: () => updateTimer(90),
+    category: SettingCommandTypes.timer,
+  },
+  {
+    name: "30",
+    callee: () => updateWordsLength(30),
+    category: SettingCommandTypes.words_length,
+  },
+  {
+    name: "60",
+    callee: () => updateWordsLength(60),
+    category: SettingCommandTypes.words_length,
+  },
+  {
+    name: "90",
+    callee: () => updateWordsLength(90),
+    category: SettingCommandTypes.words_length,
+  },
   {
     name: "About Typo",
     callee: () => aboutStore.update((about) => (about = !about)),
+    category: NonSettingCommandTypes.misc,
   },
 ];
 

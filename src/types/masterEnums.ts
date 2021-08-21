@@ -22,3 +22,14 @@ export enum Constants {
   content = "Typo.:A Fast,:Powerful,:Playful app:to improve your typing skills.:" +
     "Playmodes,:Settings,:Themes:to make it more fun.:Now type it,:Typo it,:repeat it.:It keeps Evolving.",
 }
+
+export enum SettingCommandTypes {
+  timer = "Timer",
+  words_length = "Words length",
+}
+
+export enum NonSettingCommandTypes {
+  theme = "Theme",
+  playmode = "Playmode",
+  misc = "Misc",
+}
