@@ -3,7 +3,14 @@ import {
   NonSettingCommandTypes,
   SettingCommandTypes,
 } from "../../types/masterEnums";
-import { playmode, theme, timer, wordsLength } from "../masterStore";
+import {
+  command,
+  isCommandPaletteActive,
+  playmode,
+  theme,
+  timer,
+  wordsLength,
+} from "../masterStore";
 
 export interface MenuInterface {
   category: string;
@@ -15,12 +22,17 @@ export interface MenuInterface {
   suffix?: string;
 }
 
+const updateCommand = (cmd: string) => {
+  isCommandPaletteActive.set(true);
+  command.set(cmd);
+};
+
 export let menus: MenuInterface[] = [
   {
     category: NonSettingCommandTypes.playmode,
     showOnMenu: true,
     callee: () => {
-      console.log(NonSettingCommandTypes.playmode);
+      updateCommand(NonSettingCommandTypes.playmode);
     },
     position: "left",
     value: playmode,
@@ -28,14 +40,18 @@ export let menus: MenuInterface[] = [
   {
     category: NonSettingCommandTypes.theme,
     showOnMenu: false,
-    callee: () => {},
+    callee: () => {
+      updateCommand(NonSettingCommandTypes.theme);
+    },
     position: "left",
     value: theme,
   },
   {
     category: SettingCommandTypes.timer,
     showOnMenu: true,
-    callee: () => {},
+    callee: () => {
+      updateCommand(SettingCommandTypes.timer);
+    },
     position: "right",
     value: timer,
     suffix: "s",
@@ -43,7 +59,9 @@ export let menus: MenuInterface[] = [
   {
     category: SettingCommandTypes.words_length,
     showOnMenu: true,
-    callee: () => {},
+    callee: () => {
+      updateCommand(SettingCommandTypes.words_length);
+    },
     position: "right",
     value: wordsLength,
   },
