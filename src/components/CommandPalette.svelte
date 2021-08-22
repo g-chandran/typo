@@ -11,7 +11,10 @@
   import type { CommandInterface } from "../stores/utils/commands";
   import CommandItem from "./CommandItem.svelte";
 
-  const focusInput = (node: HTMLInputElement) => node.focus();
+  const focusInput = (node: HTMLInputElement) => {
+    node.focus();
+    node.select();
+  };
   const dispatch = createEventDispatcher();
 
   let currentIndex: number = 0;
