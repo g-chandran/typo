@@ -5,9 +5,10 @@
   export let onClick: () => void = () => {};
   export let prefix: string;
   export let suffix: string;
+  export let title: string;
 </script>
 
-<span class="menu" on:click={onClick}>
+<span class="menu" on:click={onClick} {title}>
   {prefix || "" + $name + (suffix || "")}
 </span>
 

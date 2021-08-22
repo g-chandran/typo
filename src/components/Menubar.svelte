@@ -15,6 +15,7 @@
           name={menu.value}
           prefix={menu.prefix}
           suffix={menu.suffix}
+          title={menu.category}
         />
       {/if}
     {/each}
@@ -27,6 +28,7 @@
           name={menu.value}
           prefix={menu.prefix}
           suffix={menu.suffix}
+          title={menu.category}
         />
       {/if}
     {/each}
