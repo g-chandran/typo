@@ -5,12 +5,14 @@
   import { theme } from "../stores/masterStore";
   import type { OS } from "../types/mainTypes";
   import { Colors } from "../types/masterEnums";
+  import Menubar from "../components/Menubar.svelte";
 
   export let os: OS;
 
   const modifierKey: string = os === "MacOS" ? "Option" : "Ctrl";
 
   let isCommandPaletteActive: boolean = false;
+  $: color = $theme === "dark" ? Colors.white : Colors.black;
 
   /* 
   Toggles the state of the Command Palette by default, also uses an optional argument to update it
@@ -53,10 +55,13 @@
     onClickEventName="updateStage"
     title="Start Typing"
   />
-  <section style="color: {$theme === 'dark' ? Colors.white : Colors.black};">
+  <section style="color: {color};">
     <span>{modifierKey}</span>
     +
     <span>Space</span>
+  </section>
+  <section class="menubar">
+    <Menubar {color} />
   </section>
 </div>
 
@@ -79,5 +84,8 @@
     padding: 2px 5px;
     border-radius: 5px;
     font-size: var(--small-font);
+  }
+  .menubar {
+    bottom: 0%;
   }
 </style>
