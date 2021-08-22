@@ -9,8 +9,8 @@
   type AllPlaymodes = Record<Playmodes, typeof SvelteComponent>;
 
   const playmodes: AllPlaymodes = {
-    classic: ClassicPlaymode,
-    reverse_classic: ReverseClassicPlaymode,
+    Classic: ClassicPlaymode,
+    "Reverse Classic": ReverseClassicPlaymode,
   };
 </script>
 
