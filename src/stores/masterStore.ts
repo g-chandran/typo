@@ -13,3 +13,6 @@ export const theme: Writable<Themes> = writable(getTheme());
 export const playmode: Writable<Playmodes> = writable(getPlaymode());
 export const wordsLength: Writable<Units> = writable(getWordsLength());
 export const aboutStore: Writable<boolean> = writable(false);
+export const command: Writable<string> = writable("");
+export const isCommandPaletteActive: Writable<boolean> = writable(false);
+export const showMenubar: Writable<boolean> = writable(true);

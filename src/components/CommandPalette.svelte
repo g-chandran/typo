@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { theme } from "../stores/masterStore";
+  import { command, theme } from "../stores/masterStore";
   import { createEventDispatcher } from "svelte";
   import {
     Colors,
@@ -11,29 +11,31 @@
   import type { CommandInterface } from "../stores/utils/commands";
   import CommandItem from "./CommandItem.svelte";
 
-  const focusInput = (node: HTMLInputElement) => node.focus();
+  const focusInput = (node: HTMLInputElement) => {
+    node.focus();
+    node.select();
+  };
   const dispatch = createEventDispatcher();
 
   let currentIndex: number = 0;
   let suggestions: CommandInterface[] = [];
   let filters: CommandInterface[][] = [Commands];
-  let command: string = "";
 
   /* 
     Reactive block for updating field filters
   */
   $: {
-    if (command[0] === CommandFilters.themeFilter)
+    if ($command[0] === CommandFilters.themeFilter)
       filters = [
         Commands.filter((cmd) => cmd.category === NonSettingCommandTypes.theme),
       ];
-    else if (command[0] === CommandFilters.playmodeFilter)
+    else if ($command[0] === CommandFilters.playmodeFilter)
       filters = [
         Commands.filter(
           (cmd) => cmd.category === NonSettingCommandTypes.playmode
         ),
       ];
-    else if (command[0] === CommandFilters.settingsFilter)
+    else if ($command[0] === CommandFilters.settingsFilter)
       filters = [
         Commands.filter((cmd) =>
           (<any>Object).values(SettingCommandTypes).includes(cmd.category)
@@ -49,7 +51,7 @@
   const updateSuggestions = (): void => {
     suggestions = [];
     currentIndex = 0;
-    if (command.length > 0)
+    if ($command.length > 0)
       for (const filter_ of filters) {
         suggestions.push(...filter_.filter(inputValidator));
       }
@@ -59,9 +61,9 @@
   Checks whether command is a substring of any filter
   */
   const inputValidator = (value: CommandInterface): boolean => {
-    let comparison = (<any>Object).values(CommandFilters).includes(command[0])
-      ? command.slice(1)
-      : command.toLowerCase();
+    let comparison = (<any>Object).values(CommandFilters).includes($command[0])
+      ? $command.slice(1)
+      : $command.toLowerCase();
     const isValid: boolean =
       value.name.toLowerCase().includes(comparison) ||
       value.category.toLowerCase().includes(comparison);
@@ -111,7 +113,7 @@
   <section class="search-bar">
     <i class="material-icons">search</i>
     <input
-      bind:value={command}
+      bind:value={$command}
       use:focusInput
       type="text"
       placeholder="just typo it"
@@ -130,7 +132,7 @@
       />
     {:else}
       <em style="color: {foregroundColor};"
-        >{command.length > 0
+        >{$command.length > 0
           ? "No matching commands"
           : ">: theme, #: playmode, @: settings"}</em
       >

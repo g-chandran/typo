@@ -2,7 +2,7 @@ import {
   NonSettingCommandTypes,
   SettingCommandTypes,
 } from "../../types/masterEnums";
-import { aboutStore } from "../masterStore";
+import { aboutStore, showMenubar } from "../masterStore";
 import {
   updatePlaymode,
   updateTheme,
@@ -32,12 +32,12 @@ export let Commands: CommandInterface[] = [
   },
   {
     name: "Classic",
-    callee: () => updatePlaymode("classic"),
+    callee: () => updatePlaymode("Classic"),
     category: NonSettingCommandTypes.playmode,
   },
   {
     name: "Reverse Classic",
-    callee: () => updatePlaymode("reverse_classic"),
+    callee: () => updatePlaymode("Reverse Classic"),
     category: NonSettingCommandTypes.playmode,
   },
   {
@@ -73,6 +73,11 @@ export let Commands: CommandInterface[] = [
   {
     name: "About Typo",
     callee: () => aboutStore.update((about) => (about = !about)),
+    category: NonSettingCommandTypes.misc,
+  },
+  {
+    name: "Toggle Menubar",
+    callee: () => showMenubar.update((isShown) => (isShown = !isShown)),
     category: NonSettingCommandTypes.misc,
   },
 ];

@@ -2,22 +2,37 @@
   import Button from "../components/Button.svelte";
   import CommandPalette from "../components/CommandPalette.svelte";
   import { fly } from "svelte/transition";
-  import { theme } from "../stores/masterStore";
+  import {
+    isCommandPaletteActive,
+    showMenubar,
+    theme,
+    timer,
+    wordsLength,
+  } from "../stores/masterStore";
   import type { OS } from "../types/mainTypes";
   import { Colors } from "../types/masterEnums";
+  import Menubar from "../components/Menubar.svelte";
+  import { onMount } from "svelte";
+  import { getTimerDuration, getWordsLength } from "../stores/utils/properties";
 
   export let os: OS;
 
   const modifierKey: string = os === "MacOS" ? "Option" : "Ctrl";
 
-  let isCommandPaletteActive: boolean = false;
+  $: color = $theme === "dark" ? Colors.white : Colors.black;
+
+  onMount(() => {
+    timer.set(getTimerDuration());
+    wordsLength.set(getWordsLength());
+  });
 
   /* 
   Toggles the state of the Command Palette by default, also uses an optional argument to update it
   */
   const updateCommandPalette = (updateTo: boolean = null): void => {
-    isCommandPaletteActive =
-      updateTo === null ? !isCommandPaletteActive : updateTo;
+    isCommandPaletteActive.set(
+      updateTo === null ? !$isCommandPaletteActive : updateTo
+    );
   };
 
   /* 
@@ -40,7 +55,7 @@
 <svelte:window on:keydown={handleKeys} />
 
 <div>
-  {#if isCommandPaletteActive}
+  {#if $isCommandPaletteActive}
     <div transition:fly={{ duration: 100, y: -200 }}>
       <CommandPalette
         on:suggestionHandled={() => updateCommandPalette(false)}
@@ -53,11 +68,16 @@
     onClickEventName="updateStage"
     title="Start Typing"
   />
-  <section style="color: {$theme === 'dark' ? Colors.white : Colors.black};">
+  <section style="color: {color};">
     <span>{modifierKey}</span>
     +
     <span>Space</span>
   </section>
+  {#if $showMenubar}
+    <section class="menubar">
+      <Menubar {color} />
+    </section>
+  {/if}
 </div>
 
 <style>
@@ -79,5 +99,8 @@
     padding: 2px 5px;
     border-radius: 5px;
     font-size: var(--small-font);
+  }
+  .menubar {
+    bottom: 0%;
   }
 </style>
