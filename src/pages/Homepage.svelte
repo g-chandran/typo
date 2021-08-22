@@ -4,6 +4,7 @@
   import { fly } from "svelte/transition";
   import {
     isCommandPaletteActive,
+    showMenubar,
     theme,
     timer,
     wordsLength,
@@ -72,9 +73,11 @@
     +
     <span>Space</span>
   </section>
-  <section class="menubar">
-    <Menubar {color} />
-  </section>
+  {#if $showMenubar}
+    <section class="menubar">
+      <Menubar {color} />
+    </section>
+  {/if}
 </div>
 
 <style>

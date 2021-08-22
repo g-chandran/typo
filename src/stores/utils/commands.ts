@@ -2,7 +2,7 @@ import {
   NonSettingCommandTypes,
   SettingCommandTypes,
 } from "../../types/masterEnums";
-import { aboutStore } from "../masterStore";
+import { aboutStore, showMenubar } from "../masterStore";
 import {
   updatePlaymode,
   updateTheme,
@@ -73,6 +73,11 @@ export let Commands: CommandInterface[] = [
   {
     name: "About Typo",
     callee: () => aboutStore.update((about) => (about = !about)),
+    category: NonSettingCommandTypes.misc,
+  },
+  {
+    name: "Toggle Menubar",
+    callee: () => showMenubar.update((isShown) => (isShown = !isShown)),
     category: NonSettingCommandTypes.misc,
   },
 ];
