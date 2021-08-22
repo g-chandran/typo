@@ -13,11 +13,14 @@
 
 <style>
   .menu {
-    margin: 0 5px;
+    padding: 0 5px;
     text-transform: capitalize;
     font-size: var(--small-font);
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
   }
   .menu:hover {
-    font-size: calc(var(--med-font-2) - 2px);
+    background-color: var(--med-orange);
   }
 </style>

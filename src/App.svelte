@@ -107,7 +107,7 @@
 
   :global(:root) {
     --orange: #ff3e00;
-    --med-orange: #ff40009f;
+    --med-orange: #f86f42;
     --dark-1: #28293d;
     --dark-2: #555770;
     --dark-3: #8f90a6;
