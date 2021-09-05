@@ -5,11 +5,24 @@
   import { loadImages } from "./stores/collections/imageCollection";
   import { onMount } from "svelte";
   import Homepage from "./pages/Homepage.svelte";
-  import { theme, aboutStore } from "./stores/masterStore";
+  import {
+    theme,
+    aboutStore,
+    playmode,
+    timer,
+    wordsLength,
+  } from "./stores/masterStore";
   import About from "./pages/About.svelte";
   import Unsupported from "./pages/Unsupported.svelte";
-  import type { Stages, OS, UpdateStage } from "../src/types/mainTypes";
+  import type {
+    Stages,
+    OS,
+    UpdateStage,
+    Playmodes,
+    Units,
+  } from "../src/types/mainTypes";
   import { Constants, ThemeColors } from "./types/masterEnums";
+  import type { Themes } from "./types/mainTypes";
 
   let currentStage: Stages = "start";
 
@@ -64,9 +77,33 @@
     return os;
   };
 
+  const loadLocalSettings = (): void => {
+    const local_theme = window.localStorage.getItem("theme");
+    const local_playmode = window.localStorage.getItem("playmode");
+    const local_timer = window.localStorage.getItem("timer");
+    const local_wordsLength = window.localStorage.getItem("wordsLength");
+    if (local_theme && ["dark", "light"].includes(local_theme))
+      theme.set(<Themes>local_theme);
+    if (
+      local_playmode &&
+      ["Classic", "Reverse Classic"].includes(local_playmode)
+    )
+      playmode.set(<Playmodes>local_playmode);
+    if (local_timer) {
+      const parsed_timer = parseInt(local_timer);
+      if ([30, 60, 90].includes(parsed_timer)) timer.set(parsed_timer);
+    }
+    if (local_wordsLength) {
+      const parsed_wordsLength = parseInt(local_wordsLength);
+      if ([30, 60, 90].includes(parsed_wordsLength))
+        wordsLength.set(<Units>parsed_wordsLength);
+    }
+  };
+
   let os: OS = getOS();
   onMount(() => {
     if (os !== "Android" && os !== "iOS") loadImages();
+    loadLocalSettings();
   });
 </script>
 
