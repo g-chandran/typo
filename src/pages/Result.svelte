@@ -53,8 +53,8 @@
   }
 
   img {
-    width: 15rem;
-    height: 15rem;
+    width: 20rem;
+    height: 20rem;
     margin-bottom: 2rem;
     opacity: 0;
   }
